@@ -52,7 +52,7 @@ export default function HomeScreen() {
           onItemPress={handleItemPress}
         />
       </ScrollView>
-      <FAB onPress={handleAddSubscription} />
+      {/* <FAB onPress={handleAddSubscription} /> */}
       <StatusBar style="light" />
     </SafeAreaView>
   );

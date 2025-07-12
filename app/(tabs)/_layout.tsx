@@ -1,3 +1,4 @@
+/*
 import { Tabs } from 'expo-router';
 import Octicons from '@expo/vector-icons/Octicons';
 import { theme } from '../../utils/theme';
@@ -56,3 +57,4 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+*/

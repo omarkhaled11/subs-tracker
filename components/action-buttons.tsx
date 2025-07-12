@@ -12,73 +12,97 @@ export const ActionButtons = () => {
 
   return (
     <View style={styles.container}>
-      <Pressable
-        style={({ pressed }) => [
-          styles.button,
-          pressed && styles.buttonPressed
-        ]}
-        onPress={() => handleNavigate("/add-subscription")}
-      >
-        <Ionicons name="add" size={24} color={darkTheme.colors.background} />
-        <Text style={styles.buttonText}>Add</Text>
-      </Pressable>
+      <View style={styles.navigationContainer}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.addButton,
+            pressed && styles.addButtonPressed
+          ]}
+          onPress={() => handleNavigate("/add-subscription")}
+        >
+          <Ionicons name="add" size={32} color={darkTheme.colors.background} />
+        </Pressable>
 
-      <Pressable
-        style={({ pressed }) => [
-          styles.button,
-          pressed && styles.buttonPressed
-        ]}
-        onPress={() => handleNavigate("/(tabs)/analytics")}
-      >
-        <Ionicons name="analytics" size={24} color={darkTheme.colors.background} />
-        <Text style={styles.buttonText}>Analysis</Text>
-      </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.navButton,
+            pressed && styles.buttonPressed
+          ]}
+          onPress={() => handleNavigate("/(tabs)/analytics")}
+        >
+          <Ionicons name="analytics" size={22} color={darkTheme.colors.background} />
+          <Text style={styles.navButtonText}>Analysis</Text>
+        </Pressable>
 
-      <Pressable
-        style={({ pressed }) => [
-          styles.button,
-          pressed && styles.buttonPressed
-        ]}
-        onPress={() => handleNavigate("/(tabs)/settings")}
-      >
-        <Ionicons name="settings" size={24} color={darkTheme.colors.background} />
-        <Text style={styles.buttonText}>Settings</Text>
-      </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.navButton,
+            pressed && styles.buttonPressed
+          ]}
+          onPress={() => handleNavigate("/(tabs)/settings")}
+        >
+          <Ionicons name="settings" size={22} color={darkTheme.colors.background} />
+          <Text style={styles.navButtonText}>Settings</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     paddingHorizontal: 16,
     marginVertical: 16,
   },
-  button: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 12,
-    padding: 16,
+  navigationContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: 4,
+  },
+  navButton: {
+    flex: 1,
+    backgroundColor: darkTheme.colors.primary,
+    borderRadius: 12,
+    padding: 12,
+    alignItems: "center",
+    marginHorizontal: 8,
     justifyContent: "center",
     shadowColor: darkTheme.colors.primary,
     shadowOffset: {
       width: 0,
-      height: 0,
+      height: 2,
     },
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  addButton: {
+    width: 64,
+    height: 64,
+    backgroundColor: darkTheme.colors.primary,
+    borderRadius: 32,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 16,
+    shadowColor: darkTheme.colors.primary,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
     shadowRadius: 12,
     elevation: 12,
   },
   buttonPressed: {
-    transform: [{ scale: 0.98 }],
+    transform: [{ scale: 0.97 }],
   },
-  buttonText: {
+  addButtonPressed: {
+    transform: [{ scale: 0.96 }],
+  },
+  navButtonText: {
     color: darkTheme.colors.background,
     marginTop: 8,
     fontSize: 14,
-    fontFamily: "Sora-Regular",
+    fontFamily: darkTheme.text.fontFamily,
   },
 });

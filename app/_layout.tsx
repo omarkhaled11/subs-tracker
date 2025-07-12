@@ -32,7 +32,35 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="index" />
+          <Stack.Screen 
+            name="analytics" 
+            options={{
+              headerShown: true,
+              headerTitle: "Analytics",
+              headerStyle: {
+                backgroundColor: theme.colors.background,
+              },
+              headerTintColor: theme.colors.text,
+              headerTitleStyle: {
+                fontWeight: "600",
+              },
+            }}
+          />
+          <Stack.Screen 
+            name="settings"
+            options={{
+              headerShown: true,
+              headerTitle: "Settings",
+              headerStyle: {
+                backgroundColor: theme.colors.background,
+              },
+              headerTintColor: theme.colors.text,
+              headerTitleStyle: {
+                fontWeight: "600",
+              },
+            }}
+          />
           <Stack.Screen
             name="add-subscription"
             options={{
