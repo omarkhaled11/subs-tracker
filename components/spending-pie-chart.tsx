@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     marginBottom: 16,
     textAlign: "center",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   chartContainer: {
     alignItems: "center",
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: theme.colors.text,
     flex: 1,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   emptyState: {
     alignItems: "center",
@@ -188,6 +188,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.colors.secondary,
     textAlign: "center",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
 }); 

@@ -82,11 +82,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: theme.colors.text,
     marginBottom: 8,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   required: {
     color: theme.colors.primary,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -108,19 +108,19 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 7,
     borderBottomLeftRadius: 7,
     paddingVertical: 12,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   input: {
     flex: 1,
     padding: 12,
     paddingLeft: 8,
     fontSize: 16,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   errorText: {
     color: theme.colors.primary,
     fontSize: 14,
     marginTop: 4,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
 }); 

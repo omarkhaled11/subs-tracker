@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: theme.colors.text,
     marginBottom: 8,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   required: {
     color: theme.colors.primary,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   dropdown: {
     flexDirection: "row",
@@ -111,21 +111,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.colors.secondary,
     flex: 1,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   placeholderText: {
     color: theme.colors.secondary,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   arrow: {
     fontSize: 12,
     color: theme.colors.secondary,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   errorText: {
     color: theme.colors.primary,
     fontSize: 14,
     marginTop: 4,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
 });

@@ -251,14 +251,14 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     textAlign: "center",
     marginBottom: 8,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   amount: {
     fontSize: 32,
     fontWeight: "700",
     color: theme.colors.primary,
     textAlign: "center",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   detailsSection: {
     backgroundColor: theme.colors.card,
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.colors.secondary,
     fontWeight: "500",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   detailValue: {
     fontSize: 16,
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     flex: 1,
     textAlign: "right",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   urgentText: {
     color: theme.colors.primary,
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: theme.colors.text,
     marginBottom: 16,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   breakdownRow: {
     flexDirection: "row",
@@ -316,13 +316,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.colors.secondary,
     fontWeight: "500",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   breakdownValue: {
     fontSize: 16,
     color: theme.colors.text,
     fontWeight: "600",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   errorContainer: {
     flex: 1,
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
     color: theme.colors.secondary,
     marginBottom: 20,
     textAlign: "center",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   backButton: {
     backgroundColor: theme.colors.primary,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     fontSize: 16,
     fontWeight: "600",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   lastDetailRow: {
     borderBottomWidth: 0,

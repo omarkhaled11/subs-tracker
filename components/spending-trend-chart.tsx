@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     marginBottom: 16,
     textAlign: "center",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   statsContainer: {
     flexDirection: "row",
@@ -220,13 +220,13 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     textTransform: "uppercase",
     letterSpacing: 0.5,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   statValue: {
     fontSize: 16,
     fontWeight: "bold",
     color: theme.colors.text,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   statIncrease: {
     color: "#FF6B6B", // Red for increase
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: theme.colors.text,
     marginBottom: 8,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   insightText: {
     fontSize: 12,
@@ -271,6 +271,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.colors.secondary,
     textAlign: "center",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
 }); 

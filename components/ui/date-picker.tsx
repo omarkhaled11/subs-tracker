@@ -227,11 +227,11 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: theme.colors.text,
     marginBottom: 8,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   required: {
     color: theme.colors.error,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   dateButton: {
     flexDirection: "row",
@@ -251,18 +251,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.colors.text,
     flex: 1,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   placeholderText: {
     color: theme.colors.secondary,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   chevron: {
     fontSize: 18,
     color: theme.colors.secondary,
     fontWeight: "300",
     transform: [{ rotate: "90deg" }],
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   modalOverlay: {
     flex: 1,
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "600",
     color: theme.colors.text,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   pickerWrapper: {
     paddingHorizontal: 20,
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: theme.colors.text,
     textAlign: "center",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   cancelButtonFull: {
     width: "100%",
@@ -331,12 +331,12 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: theme.colors.text,
     textAlign: "center",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   errorText: {
     color: theme.colors.error,
     fontSize: 14,
     marginTop: 4,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
 });

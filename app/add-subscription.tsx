@@ -239,12 +239,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: theme.colors.text,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   saveButtonText: {
     fontSize: 16,
     fontWeight: "600",
     color: theme.colors.text,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
 });

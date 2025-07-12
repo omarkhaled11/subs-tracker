@@ -107,19 +107,19 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     textTransform: "uppercase",
     letterSpacing: 0.5,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   analyticsAmount: {
     fontSize: 24,
     fontWeight: "bold",
     color: theme.colors.text,
     marginBottom: 2,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   analyticsSubtext: {
     fontSize: 11,
     color: theme.colors.secondary,
     fontWeight: "400",
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
 });

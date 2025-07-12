@@ -11,6 +11,11 @@ export const darkTheme = {
     overlay: "#000000",
     transparent: "transparent",
   },
+  fonts: {
+    regular: "Sora-Regular",
+    medium: "Sora-Medium",
+    bold: "Sora-Bold",
+  },
   text: {
     fontFamily: "Sora-Regular",
   },
@@ -28,6 +33,11 @@ export const lightTheme = {
     shadow: "#000000",
     overlay: "#000000",
     transparent: "transparent",
+  },
+  fonts: {
+    regular: "Sora-Regular",
+    medium: "Sora-Medium",
+    bold: "Sora-Bold",
   },
   text: {
     fontFamily: "Sora-Regular",

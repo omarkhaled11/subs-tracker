@@ -66,11 +66,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: theme.colors.text,
     marginBottom: 8,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   required: {
     color: theme.colors.primary,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   input: {
     borderWidth: 1,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     padding: 12,
     fontSize: 16,
     backgroundColor: theme.colors.card,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   inputError: {
     borderColor: theme.colors.primary,
@@ -88,6 +88,6 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     fontSize: 14,
     marginTop: 4,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
 }); 

@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { currencies, reminderOptions } from "../../utils/constants";
-import { theme } from "../../utils/theme";
+import { currencies, reminderOptions } from "../utils/constants";
+import { theme } from "../utils/theme";
 
 const SettingSection = ({
   title,
@@ -259,19 +259,19 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    paddingBottom: 16,
+    paddingBottom: 24,
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
     marginBottom: 8,
     color: theme.colors.text,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   subtitle: {
     fontSize: 16,
     color: theme.colors.secondary,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   section: {
     marginTop: 16,
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 8,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   settingRow: {
     flexDirection: "row",
@@ -320,12 +320,12 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "400",
     color: theme.colors.text,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   settingSubtitle: {
     fontSize: 13,
     color: theme.colors.secondary,
     marginTop: 2,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
 });

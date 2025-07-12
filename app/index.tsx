@@ -4,14 +4,14 @@ import { router } from "expo-router";
 import {
   SubscriptionAmountCard,
   UpcomingRenewalCard,
-} from "../../components/card";
-import { SubList } from "../../components/sub-list";
-import { FAB } from "../../components/ui/fab";
-import { useSubscriptionsStore } from "../../utils/store";
-import { SubscriptionItem } from "../../utils/types";
-import { darkTheme } from "../../utils/theme";
-import { currencySymbols } from "../../utils/constants";
-import { ActionButtons } from "../../components/action-buttons";
+} from "../components/card";
+import { SubList } from "../components/sub-list";
+import { FAB } from "../components/ui/fab";
+import { useSubscriptionsStore } from "../utils/store";
+import { SubscriptionItem } from "../utils/types";
+import { theme } from "../utils/theme";
+import { currencySymbols } from "../utils/constants";
+import { ActionButtons } from "../components/action-buttons";
 
 export default function HomeScreen() {
   const {
@@ -61,7 +61,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: darkTheme.colors.background,
+    backgroundColor: theme.colors.background,
   },
   scrollView: {
     flex: 1,

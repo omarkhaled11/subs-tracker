@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
-import { theme } from '../../utils/theme';
-import { AnalyticsSummaryCards } from '../../components/analytics-card';
-import { SpendingPieChart } from '../../components/spending-pie-chart';
-import { SpendingTrendChart } from '../../components/spending-trend-chart';
-import { useSubscriptionsStore } from '../../utils/store';
-import { currencySymbols } from '../../utils/constants';
+import { theme } from '../utils/theme';
+import { AnalyticsSummaryCards } from '../components/analytics-card';
+import { SpendingPieChart } from '../components/spending-pie-chart';
+import { SpendingTrendChart } from '../components/spending-trend-chart';
+import { useSubscriptionsStore } from '../utils/store';
+import { currencySymbols } from '../utils/constants';
 
 export default function AnalyticsScreen() {
   const {
@@ -69,18 +69,18 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    paddingBottom: 16,
+    paddingBottom: 24,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 8,
     color: theme.colors.text,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   subtitle: {
     fontSize: 16,
     color: theme.colors.secondary,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
 });

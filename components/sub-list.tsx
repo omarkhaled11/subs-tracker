@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginBottom: 15,
     color: theme.colors.text,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.bold,
   },
   listContainer: {
     // Removed flex: 1 and replaced ScrollView with View
@@ -131,14 +131,14 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: theme.colors.text,
     marginBottom: 8,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   emptyDescription: {
     fontSize: 14,
     color: theme.colors.secondary,
     textAlign: "center",
     lineHeight: 20,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   listItem: {
     flexDirection: "row",
@@ -173,20 +173,20 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 20,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   label: {
     fontSize: 16,
     fontWeight: "500",
     color: theme.colors.text,
     flex: 1,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   amount: {
     fontSize: 16,
     fontWeight: "600",
     color: theme.colors.primary,
-    fontFamily: theme.text.fontFamily,
+    fontFamily: theme.fonts.regular,
   },
   deleteAction: {
     backgroundColor: theme.colors.error,

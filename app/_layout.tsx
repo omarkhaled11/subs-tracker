@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import { theme } from "../utils/theme";
 import { useEffect, useState } from "react";
 import { loadFonts } from "../utils/fonts";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function RootLayout() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -37,28 +38,44 @@ export default function RootLayout() {
             name="analytics" 
             options={{
               headerShown: true,
-              headerTitle: "Analytics",
+              headerTitle: "",
               headerStyle: {
                 backgroundColor: theme.colors.background,
               },
-              headerTintColor: theme.colors.text,
-              headerTitleStyle: {
-                fontWeight: "600",
-              },
+              headerShadowVisible: false,
+              headerLeft: () => (
+                <TouchableOpacity 
+                  onPress={() => router.back()}
+                >
+                  <Ionicons 
+                    name="arrow-back" 
+                    size={24} 
+                    color={theme.colors.text} 
+                  />
+                </TouchableOpacity>
+              ),
             }}
           />
           <Stack.Screen 
             name="settings"
             options={{
               headerShown: true,
-              headerTitle: "Settings",
+              headerTitle: "",
               headerStyle: {
                 backgroundColor: theme.colors.background,
               },
-              headerTintColor: theme.colors.text,
-              headerTitleStyle: {
-                fontWeight: "600",
-              },
+              headerShadowVisible: false,
+              headerLeft: () => (
+                <TouchableOpacity 
+                  onPress={() => router.back()}
+                >
+                  <Ionicons 
+                    name="arrow-back" 
+                    size={24} 
+                    color={theme.colors.text} 
+                  />
+                </TouchableOpacity>
+              ),
             }}
           />
           <Stack.Screen
@@ -73,6 +90,7 @@ export default function RootLayout() {
               headerTintColor: theme.colors.text,
               headerTitleStyle: {
                 fontWeight: "600",
+                fontFamily: theme.fonts.regular,
               },
               gestureEnabled: true,
             }}
