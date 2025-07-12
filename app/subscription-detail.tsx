@@ -262,8 +262,9 @@ const styles = StyleSheet.create({
   },
   detailsSection: {
     backgroundColor: theme.colors.card,
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: theme.borderRadius.small,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     marginBottom: 24,
   },
   detailRow: {
@@ -296,7 +297,7 @@ const styles = StyleSheet.create({
   },
   breakdownSection: {
     backgroundColor: theme.colors.card,
-    borderRadius: 12,
+    borderRadius: theme.borderRadius.small,
     padding: 16,
   },
   sectionTitle: {

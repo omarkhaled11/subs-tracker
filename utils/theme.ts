@@ -16,6 +16,12 @@ export const darkTheme = {
     medium: "Sora-Medium",
     bold: "Sora-Bold",
   },
+  borderRadius: {
+    small: 8,
+    medium: 12,
+    large: 16,
+    xl: 24,
+  },
   text: {
     fontFamily: "Sora-Regular",
   },

@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: theme.colors.border,
-    borderRadius: 8,
+    borderRadius: theme.borderRadius.small,
     backgroundColor: theme.colors.card,
   },
   inputContainerError: {

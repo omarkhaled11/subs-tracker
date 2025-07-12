@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 import { Pressable } from "react-native-gesture-handler";
 import { Text } from "react-native";
 import { theme } from "../utils/theme";
@@ -31,7 +31,7 @@ export const ActionButtons = () => {
           onPress={() => handleNavigate("/analytics")}
         >
           <Ionicons
-            name="analytics"
+            name="analytics-sharp"
             size={22}
             color={theme.colors.background}
           />
@@ -45,7 +45,7 @@ export const ActionButtons = () => {
           ]}
           onPress={() => handleNavigate("/settings")}
         >
-          <Ionicons name="settings" size={22} color={theme.colors.background} />
+          <Octicons name="gear" size={22} color={theme.colors.background} />
           <Text style={styles.navButtonText}>Settings</Text>
         </Pressable>
       </View>
@@ -66,19 +66,20 @@ const styles = StyleSheet.create({
   navButton: {
     flex: 1,
     backgroundColor: theme.colors.primary,
-    borderRadius: 12,
-    padding: 12,
+    borderRadius: theme.borderRadius.xl,
+    paddingVertical: 12,
+    flexDirection: "row",
     alignItems: "center",
-    marginHorizontal: 8,
     justifyContent: "center",
+    marginLeft: 16,
     shadowColor: theme.colors.primary,
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.4,
-    shadowRadius: 15,
-    elevation: 8,
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 6,
     borderWidth: 1,
     borderColor: theme.colors.background,
   },
@@ -89,15 +90,14 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 16,
     shadowColor: theme.colors.primary,
     shadowOffset: {
       width: 0,
       height: 4,
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 12,
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 6,
   },
   buttonPressed: {
     transform: [{ scale: 0.95 }],
@@ -107,8 +107,8 @@ const styles = StyleSheet.create({
   },
   navButtonText: {
     color: theme.colors.background,
-    marginTop: 8,
+    marginLeft: 8,
     fontSize: 14,
-    fontFamily: theme.fonts.bold,
+    fontFamily: theme.fonts.medium,
   },
 });

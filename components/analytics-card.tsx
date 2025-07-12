@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   analyticsCard: {
     backgroundColor: theme.colors.card,
-    borderRadius: 16,
+    borderRadius: theme.borderRadius.small,
     padding: 16,
     flex: 1,
     minHeight: 100,

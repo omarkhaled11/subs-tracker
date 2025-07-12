@@ -85,11 +85,10 @@ export const UpcomingRenewalCard: React.FC<UpcomingRenewalCardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: theme.colors.card,
-    borderRadius: 16,
+    borderRadius: theme.borderRadius.small,
     padding: 16,
-    paddingLeft: 24,
-    margin: 16,
+    marginHorizontal: 16,
+    marginVertical: 8,
     height: 140, // Takes about 1/3 of screen height
     alignSelf: "stretch",
     justifyContent: "center",
@@ -121,8 +120,8 @@ const styles = StyleSheet.create({
   // upcoming renewals
   smallCard: {
     backgroundColor: theme.colors.card,
-    borderRadius: 16,
-    padding: 12,
+    borderRadius: theme.borderRadius.small,
+    padding: 16,
     marginHorizontal: 16,
     marginBottom: 8,
     alignSelf: "stretch",
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: theme.colors.secondary,
     fontWeight: "500",
-    marginBottom: 8,
+    marginBottom: 12,
     textTransform: "uppercase",
     letterSpacing: 0.5,
     fontFamily: theme.fonts.regular,

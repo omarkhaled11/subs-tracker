@@ -181,7 +181,7 @@ export const SpendingTrendChart: React.FC<SpendingTrendChartProps> = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.card,
-    borderRadius: 16,
+    borderRadius: theme.borderRadius.small,
     margin: 16,
     marginTop: 0,
     padding: 16,

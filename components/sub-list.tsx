@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginBottom: 15,
     color: theme.colors.text,
-    fontFamily: theme.fonts.bold,
+    fontFamily: theme.fonts.medium,
   },
   listContainer: {
     // Removed flex: 1 and replaced ScrollView with View
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.card,
     paddingVertical: 15,
     paddingHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: theme.borderRadius.small,
     shadowColor: theme.colors.shadow,
     shadowOffset: {
       width: 0,

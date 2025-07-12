@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     borderWidth: 1,
     borderColor: theme.colors.border,
-    borderRadius: 8,
+    borderRadius: theme.borderRadius.small,
     padding: 12,
     backgroundColor: theme.colors.card,
     minHeight: 48,
@@ -315,11 +315,9 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   confirmButtonText: {
-    fontSize: 17,
-    fontWeight: "600",
     color: theme.colors.text,
     textAlign: "center",
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   cancelButtonFull: {
     width: "100%",
@@ -328,10 +326,9 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.secondary,
   },
   cancelButtonText: {
-    fontSize: 17,
     color: theme.colors.text,
     textAlign: "center",
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   errorText: {
     color: theme.colors.error,

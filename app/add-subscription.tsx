@@ -186,7 +186,7 @@ export default function AddSubscriptionScreen() {
           disabled={isSubmitting}
         >
           <Text style={styles.saveButtonText}>
-            {isSubmitting ? "Saving..." : "Save Subscription"}
+            {isSubmitting ? "Saving..." : "Save"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 14,
     paddingHorizontal: 20,
-    borderRadius: 24,
+    borderRadius: theme.borderRadius.xl,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -237,14 +237,13 @@ const styles = StyleSheet.create({
   },
   cancelButtonText: {
     fontSize: 16,
-    fontWeight: "600",
     color: theme.colors.text,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   saveButtonText: {
     fontSize: 16,
-    fontWeight: "600",
     color: theme.colors.text,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
+    textAlign: "center",
   },
 });
