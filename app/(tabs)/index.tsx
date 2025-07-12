@@ -11,6 +11,7 @@ import { useSubscriptionsStore } from "../../utils/store";
 import { SubscriptionItem } from "../../utils/types";
 import { darkTheme } from "../../utils/theme";
 import { currencySymbols } from "../../utils/constants";
+import { ActionButtons } from "../../components/action-buttons";
 
 export default function HomeScreen() {
   const {
@@ -44,6 +45,7 @@ export default function HomeScreen() {
           currency={currencySymbols[user.defaultCurrency]}
         />
         <UpcomingRenewalCard upcomingSubscriptions={upcomingRenewals} />
+        <ActionButtons />
         <SubList
           subscriptions={subscriptions}
           onDelete={deleteSubscription}
