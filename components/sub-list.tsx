@@ -4,7 +4,7 @@ import { Swipeable } from "react-native-gesture-handler";
 import Octicons from "@expo/vector-icons/Octicons";
 import { SubscriptionItem } from "../utils/types";
 import { theme } from "../utils/theme";
-import { currencySymbols } from "../utils/constants";
+import { currencySymbols, intervalLabels } from "../utils/constants";
 
 type SortOption = "highest" | "lowest" | "nearest";
 
@@ -149,10 +149,15 @@ export function SubList({
                   </View>
                   <Text style={styles.label}>{item.label}</Text>
                 </View>
-                <Text style={styles.amount}>
-                  {currencySymbols[item.currency]}
-                  {item.amount.toFixed(2)}
-                </Text>
+                <View style={styles.amountSection}>
+                  <Text style={styles.amount}>
+                    {currencySymbols[item.currency]}
+                    {item.amount.toFixed(2)}
+                  </Text>
+                  <Text style={styles.interval}>
+                    {intervalLabels[item.interval]}
+                  </Text>
+                </View>
               </TouchableOpacity>
             </Swipeable>
           </View>
@@ -260,11 +265,20 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: theme.fonts.regular,
   },
+  amountSection: {
+    alignItems: "flex-end",
+  },
   amount: {
     fontSize: 16,
     fontWeight: "600",
     color: theme.colors.primary,
     fontFamily: theme.fonts.regular,
+  },
+  interval: {
+    fontSize: 12,
+    color: theme.colors.secondary,
+    fontFamily: theme.fonts.regular,
+    marginTop: 2,
   },
   deleteAction: {
     backgroundColor: theme.colors.error,
