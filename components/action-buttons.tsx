@@ -32,7 +32,7 @@ export const ActionButtons = () => {
         >
           <Ionicons
             name="analytics-sharp"
-            size={22}
+            size={24}
             color={theme.colors.background}
           />
           <Text style={styles.navButtonText}>Analysis</Text>
@@ -45,7 +45,7 @@ export const ActionButtons = () => {
           ]}
           onPress={() => handleNavigate("/settings")}
         >
-          <Octicons name="gear" size={22} color={theme.colors.background} />
+          <Octicons name="gear" size={24} color={theme.colors.background} />
           <Text style={styles.navButtonText}>Settings</Text>
         </Pressable>
       </View>
@@ -72,14 +72,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 16,
-    shadowColor: theme.colors.primary,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 6,
+    // shadowColor: theme.colors.primary,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 10,
+    // elevation: 6,
     borderWidth: 1,
     borderColor: theme.colors.background,
   },
@@ -90,14 +90,14 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: theme.colors.primary,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 6,
+    // shadowColor: theme.colors.primary,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 4,
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 10,
+    // elevation: 6,
   },
   buttonPressed: {
     transform: [{ scale: 0.95 }],

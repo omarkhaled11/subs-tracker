@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Text,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
@@ -42,12 +43,11 @@ export default function SubscriptionDetailScreen() {
     const renewalDate = typeof date === "string" ? new Date(date) : date;
     if (!renewalDate || isNaN(renewalDate.getTime())) return "Not set";
 
-    return renewalDate.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    const day = renewalDate.getDate().toString().padStart(2, "0");
+    const month = (renewalDate.getMonth() + 1).toString().padStart(2, "0");
+    const year = renewalDate.getFullYear();
+
+    return `${day}.${month}.${year}`;
   };
 
   const formatInterval = (interval: string) => {
@@ -78,18 +78,34 @@ export default function SubscriptionDetailScreen() {
 
   const daysUntilRenewal = getDaysUntilRenewal();
 
-  const handleClose = () => {
-    router.back();
-  };
-
   const handleEdit = () => {
-    // TODO: Implement edit functionality
-    console.log("Edit subscription:", id);
+    router.push({
+      pathname: "/edit-subscription",
+      params: { id },
+    });
   };
 
   const handleDelete = () => {
-    // TODO: Implement delete functionality
-    console.log("Delete subscription:", id);
+    Alert.alert(
+      "Delete Expense",
+      `Are you sure you want to delete ${subscription.label}?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            const deleteSubscription =
+              useSubscriptionsStore.getState().deleteSubscription;
+            deleteSubscription(id);
+            router.back();
+          },
+        },
+      ]
+    );
   };
 
   return (
@@ -128,13 +144,21 @@ export default function SubscriptionDetailScreen() {
               style={[styles.actionButton, styles.editButton]}
               onPress={handleEdit}
             >
-              <Octicons name="pencil" size={24} color={theme.colors.background} />
+              <Octicons
+                name="pencil"
+                size={24}
+                color={theme.colors.background}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.actionButton, styles.deleteButton]}
               onPress={handleDelete}
             >
-              <Octicons name="trash" size={24} color={theme.colors.background} />
+              <Octicons
+                name="trash"
+                size={24}
+                color={theme.colors.background}
+              />
             </TouchableOpacity>
           </View>
 
@@ -387,7 +411,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     gap: 12,
     marginBottom: 24,
-
   },
   actionButton: {
     width: 50,

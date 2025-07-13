@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import Octicons from "@expo/vector-icons/Octicons";
@@ -6,17 +6,43 @@ import { SubscriptionItem } from "../utils/types";
 import { theme } from "../utils/theme";
 import { currencySymbols } from "../utils/constants";
 
+type SortOption = "highest" | "lowest" | "nearest";
+
 interface SubListProps {
   subscriptions?: SubscriptionItem[];
   onDelete?: (id: string) => void;
   onItemPress?: (item: SubscriptionItem) => void;
 }
 
+const sortSubscriptions = (
+  items: SubscriptionItem[],
+  sortBy: SortOption
+): SubscriptionItem[] => {
+  const sortedItems = [...items];
+
+  switch (sortBy) {
+    case "highest":
+      return sortedItems.sort((a, b) => b.amount - a.amount);
+    case "lowest":
+      return sortedItems.sort((a, b) => a.amount - b.amount);
+    case "nearest":
+      return sortedItems.sort((a, b) => {
+        const dateA = new Date(a.nextRenewal || new Date());
+        const dateB = new Date(b.nextRenewal || new Date());
+        return dateA.getTime() - dateB.getTime();
+      });
+    default:
+      return sortedItems;
+  }
+};
+
 export function SubList({
   subscriptions = [],
   onDelete,
   onItemPress,
 }: SubListProps) {
+  const [sortBy, setSortBy] = useState<SortOption | null>(null);
+
   const handleDelete = (item: SubscriptionItem) => {
     Alert.alert(
       "Delete Subscription",
@@ -35,6 +61,27 @@ export function SubList({
     );
   };
 
+  const handleSort = () => {
+    Alert.alert("Sort Expenses", "Choose a sorting option", [
+      {
+        text: "Highest Expense",
+        onPress: () => setSortBy("highest"),
+      },
+      {
+        text: "Lowest Expense",
+        onPress: () => setSortBy("lowest"),
+      },
+      {
+        text: "Nearest Renewal",
+        onPress: () => setSortBy("nearest"),
+      },
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+    ]);
+  };
+
   const renderRightActions = (item: SubscriptionItem) => {
     return (
       <TouchableOpacity
@@ -46,6 +93,10 @@ export function SubList({
       </TouchableOpacity>
     );
   };
+
+  const sortedSubscriptions = sortBy
+    ? sortSubscriptions(subscriptions, sortBy)
+    : subscriptions;
 
   // Show empty state if no subscriptions
   if (subscriptions.length === 0) {
@@ -65,9 +116,20 @@ export function SubList({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Your Expenses</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>Your Expenses</Text>
+        <TouchableOpacity
+          style={styles.sortButton}
+          onPress={handleSort}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.sortButtonText}>Sort</Text>
+          <Octicons name="sort-desc" size={18} color={theme.colors.text} />
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.listContainer}>
-        {subscriptions.map((item) => (
+        {sortedSubscriptions.map((item) => (
           <View key={item.id} style={styles.swipeContainer}>
             <Swipeable
               renderRightActions={() => renderRightActions(item)}
@@ -106,12 +168,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 20,
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 15,
+  },
   title: {
     fontSize: 18,
     fontWeight: "600",
-    marginBottom: 15,
     color: theme.colors.text,
     fontFamily: theme.fonts.medium,
+  },
+  sortButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 8,
+  },
+  sortButtonText: {
+    marginRight: 8,
+    fontSize: 14,
+    color: theme.colors.text,
+    fontFamily: theme.fonts.regular,
   },
   listContainer: {
     // Removed flex: 1 and replaced ScrollView with View

@@ -6,7 +6,6 @@ import {
   UpcomingRenewalCard,
 } from "../components/card";
 import { SubList } from "../components/sub-list";
-import { FAB } from "../components/ui/fab";
 import { useSubscriptionsStore } from "../utils/store";
 import { SubscriptionItem } from "../utils/types";
 import { theme } from "../utils/theme";
@@ -24,10 +23,6 @@ export default function HomeScreen() {
   const user = getUser();
   const totalAmount = getTotalMonthlyAmount();
   const upcomingRenewals = getUpcomingRenewals(30); // Get renewals in the next 30 days
-
-  const handleAddSubscription = () => {
-    router.push("/add-subscription");
-  };
 
   const handleItemPress = (item: SubscriptionItem) => {
     router.push(`/subscription-detail?id=${item.id}`);
@@ -52,7 +47,6 @@ export default function HomeScreen() {
           onItemPress={handleItemPress}
         />
       </ScrollView>
-      {/* <FAB onPress={handleAddSubscription} /> */}
       <StatusBar style="light" />
     </SafeAreaView>
   );
@@ -68,6 +62,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingTop: 10,
-    paddingBottom: 100, // Add padding to account for FAB
+    paddingBottom: 100,
   },
 });

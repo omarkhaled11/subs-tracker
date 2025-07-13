@@ -118,6 +118,24 @@ export default function RootLayout() {
               gestureEnabled: true,
             }}
           />
+          <Stack.Screen
+            name="edit-subscription"
+            options={{
+              presentation: "modal",
+              headerShown: true,
+              headerShadowVisible: false,
+              headerTitle: "Edit Expense",
+              headerStyle: {
+                backgroundColor: theme.colors.background,
+              },
+              headerTintColor: theme.colors.text,
+              headerTitleStyle: {
+                fontWeight: "600",
+                fontFamily: theme.fonts.regular,
+              },
+              gestureEnabled: true,
+            }}
+          />
         </Stack>
       </SafeAreaProvider>
     </GestureHandlerRootView>
