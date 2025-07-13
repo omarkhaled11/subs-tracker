@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
   noRenewalsText: {
     fontSize: 14,
-    color: theme.colors.secondary,
+    color: theme.colors.text,
     textAlign: "center",
     fontStyle: "italic",
     fontFamily: theme.fonts.regular,

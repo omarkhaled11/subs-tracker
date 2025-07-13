@@ -51,12 +51,12 @@ export function SubList({
   if (subscriptions.length === 0) {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Your Subscriptions</Text>
+        <Text style={styles.title}>Your Expenses</Text>
         <View style={styles.emptyState}>
           <Text style={styles.emptyIcon}>💸</Text>
-          <Text style={styles.emptyTitle}>No subscriptions yet</Text>
+          <Text style={styles.emptyTitle}>No expenses yet</Text>
           <Text style={styles.emptyDescription}>
-            Tap the + button to add your first subscription
+            Tap the + button to add your first expense
           </Text>
         </View>
       </View>
@@ -65,7 +65,7 @@ export function SubList({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Your Subscriptions</Text>
+      <Text style={styles.title}>Your Expenses</Text>
       <View style={styles.listContainer}>
         {subscriptions.map((item) => (
           <View key={item.id} style={styles.swipeContainer}>

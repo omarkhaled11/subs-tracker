@@ -84,7 +84,7 @@ export default function RootLayout() {
               presentation: "modal",
               headerShown: true,
               headerShadowVisible: false,
-              headerTitle: "Add Subscription",
+              headerTitle: "Add Expense",
               headerStyle: {
                 backgroundColor: theme.colors.background,
               },

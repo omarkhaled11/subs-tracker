@@ -13,6 +13,7 @@ interface TextInputProps {
   blurOnSubmit?: boolean;
   onSubmitEditing?: () => void;
   keyboardAppearance?: 'default' | 'light' | 'dark';
+  autoFocus?: boolean;
 }
 
 export const TextInput = forwardRef<RNTextInput, TextInputProps>(({ 
@@ -25,7 +26,8 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(({
   returnKeyType = 'next',
   blurOnSubmit = false,
   onSubmitEditing,
-  keyboardAppearance = 'dark'
+  keyboardAppearance = 'dark',
+  autoFocus = false
 }, ref) => {
   const handleSubmitEditing = () => {
     if (returnKeyType === 'done') {
@@ -51,6 +53,7 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(({
         submitBehavior={blurOnSubmit ? 'blurAndSubmit' : 'submit'}
         onSubmitEditing={handleSubmitEditing}
         keyboardAppearance={keyboardAppearance}
+        autoFocus={autoFocus}
       />
       {error && <Text style={styles.errorText}>{error}</Text>}
     </View>

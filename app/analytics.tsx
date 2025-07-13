@@ -31,7 +31,7 @@ export default function AnalyticsScreen() {
       >
         <View style={styles.header}>
           <Text style={styles.title}>Analytics</Text>
-          <Text style={styles.subtitle}>Your subscription spending insights</Text>
+          <Text style={styles.subtitle}>Your spending insights</Text>
         </View>
 
         <AnalyticsSummaryCards

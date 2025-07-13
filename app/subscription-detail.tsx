@@ -11,6 +11,9 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useSubscriptionsStore } from "../utils/store";
 import { theme } from "../utils/theme";
 import { currencySymbols } from "../utils/constants";
+import { Ionicons } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
+
 export default function SubscriptionDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const getSubscription = useSubscriptionsStore(
@@ -80,6 +83,16 @@ export default function SubscriptionDetailScreen() {
     router.back();
   };
 
+  const handleEdit = () => {
+    // TODO: Implement edit functionality
+    console.log("Edit subscription:", id);
+  };
+
+  const handleDelete = () => {
+    // TODO: Implement delete functionality
+    console.log("Delete subscription:", id);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -108,6 +121,22 @@ export default function SubscriptionDetailScreen() {
               }
               {subscription.amount.toFixed(2)}
             </Text>
+          </View>
+
+          {/* Action Buttons */}
+          <View style={styles.actionButtonsContainer}>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.editButton]}
+              onPress={handleEdit}
+            >
+              <Octicons name="pencil" size={24} color={theme.colors.background} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.deleteButton]}
+              onPress={handleDelete}
+            >
+              <Octicons name="trash" size={24} color={theme.colors.background} />
+            </TouchableOpacity>
           </View>
 
           {/* Details Section */}
@@ -231,7 +260,7 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     marginBottom: 24,
-    paddingBottom: 16,
+    paddingBottom: 4,
     paddingTop: 0,
   },
   iconContainer: {
@@ -353,5 +382,26 @@ const styles = StyleSheet.create({
   },
   lastDetailRow: {
     borderBottomWidth: 0,
+  },
+  actionButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 12,
+    marginBottom: 24,
+
+  },
+  actionButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: theme.colors.primary,
+  },
+  editButton: {
+    backgroundColor: theme.colors.primary,
+  },
+  deleteButton: {
+    backgroundColor: theme.colors.error,
   },
 });

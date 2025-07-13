@@ -25,7 +25,7 @@ import { currencySymbols } from "../utils/constants";
 
 // Validation schema
 const subscriptionSchema = z.object({
-  label: z.string().min(1, "Service name is required"),
+  label: z.string().min(1, "Name is required"),
   amount: z
     .string()
     .min(1, "Amount is required")
@@ -50,6 +50,7 @@ export default function AddSubscriptionScreen() {
   const user = getUser();
 
   // Create refs for form inputs
+  const nameInputRef = useRef<RNTextInput>(null);
   const amountInputRef = useRef<RNTextInput>(null);
 
   const {
@@ -109,7 +110,8 @@ export default function AddSubscriptionScreen() {
               name="label"
               render={({ field: { onChange, value } }) => (
                 <TextInput
-                  label="Service Name"
+                  ref={nameInputRef}
+                  label="Name"
                   value={value}
                   onChangeText={onChange}
                   placeholder="e.g., Netflix, Spotify"
@@ -117,6 +119,7 @@ export default function AddSubscriptionScreen() {
                   required
                   returnKeyType="next"
                   onSubmitEditing={() => amountInputRef.current?.focus()}
+                  autoFocus
                 />
               )}
             />
