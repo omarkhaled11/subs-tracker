@@ -83,6 +83,7 @@ export default function RootLayout() {
             options={{
               presentation: "modal",
               headerShown: true,
+              headerShadowVisible: false,
               headerTitle: "Add Subscription",
               headerStyle: {
                 backgroundColor: theme.colors.background,
@@ -100,13 +101,18 @@ export default function RootLayout() {
             options={{
               presentation: "modal",
               headerShown: true,
+              headerShadowVisible: false,
               headerTitle: "",
               headerStyle: {
                 backgroundColor: theme.colors.background,
               },
               headerRight: () => (
                 <TouchableOpacity onPress={() => router.back()}>
-                  <Text style={{ color: theme.colors.text }}>Close</Text>
+                  <Ionicons 
+                    name="chevron-down" 
+                    size={24} 
+                    color={theme.colors.text} 
+                  />
                 </TouchableOpacity>
               ),
               gestureEnabled: true,

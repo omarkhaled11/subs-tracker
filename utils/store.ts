@@ -18,6 +18,7 @@ interface SubscriptionsStore {
   addSubscription: (subscription: Omit<SubscriptionItem, "id">) => void;
   updateSubscription: (id: string, updates: Partial<SubscriptionItem>) => void;
   deleteSubscription: (id: string) => void;
+  updateUser: (updates: Partial<UserData>) => void;
 
   // Getters
   getSubscription: (id: string) => SubscriptionItem | undefined;
@@ -61,6 +62,13 @@ export const useSubscriptionsStore = create<SubscriptionsStore>()(
 
         set((state) => ({
           subscriptions: [newSubscription, ...state.subscriptions],
+        }));
+      },
+
+      // Update user data
+      updateUser: (updates) => {
+        set((state) => ({
+          user: { ...state.user, ...updates },
         }));
       },
 

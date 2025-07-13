@@ -12,6 +12,8 @@ import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { currencies, reminderOptions } from "../utils/constants";
 import { theme } from "../utils/theme";
+import { useSubscriptionsStore } from "../utils/store";
+import { Currency } from "../utils/types";
 
 const SettingSection = ({
   title,
@@ -61,17 +63,15 @@ const SettingRow = ({
 );
 
 export default function SettingsScreen() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [notifications, setNotifications] = useState(true);
   const [biometricLock, setBiometricLock] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
-  const [reminderDays, setReminderDays] = useState(7);
+  const user = useSubscriptionsStore((state) => state.getUser());
+  const updateUser = useSubscriptionsStore((state) => state.updateUser);
 
   const showCurrencyPicker = () => {
     Alert.alert("Select Currency", "Choose your preferred currency", [
-      ...currencies.map((currency) => ({
+      ...currencies.map((currency: Currency) => ({
         text: currency,
-        onPress: () => setSelectedCurrency(currency),
+        onPress: () => updateUser({ defaultCurrency: currency }),
       })),
       {
         text: "Cancel",
@@ -84,7 +84,7 @@ export default function SettingsScreen() {
     Alert.alert("Reminder Days", "How many days before renewal?", [
       ...reminderOptions.map((days) => ({
         text: `${days} day${days > 1 ? "s" : ""}`,
-        onPress: () => setReminderDays(days),
+        onPress: () => updateUser({ reminderDays: days }),
       })),
       {
         text: "Cancel",
@@ -128,14 +128,14 @@ export default function SettingsScreen() {
             subtitle="Switch between light and dark themes"
             rightComponent={
               <Switch
-                value={darkMode}
-                onValueChange={setDarkMode}
+                value={user.darkMode}
+                onValueChange={(value) => updateUser({ darkMode: value })}
                 trackColor={{
                   false: theme.colors.secondary,
                   true: theme.colors.background,
                 }}
                 thumbColor={
-                  darkMode ? theme.colors.primary : theme.colors.secondary
+                  user.darkMode ? theme.colors.primary : theme.colors.secondary
                 }
               />
             }
@@ -143,7 +143,7 @@ export default function SettingsScreen() {
           <SettingRow
             icon="cash"
             title="Default Currency"
-            subtitle={`Currently set to ${selectedCurrency}`}
+            subtitle={`Currently set to ${user.defaultCurrency}`}
             onPress={showCurrencyPicker}
             rightComponent={
               <Ionicons name="chevron-forward" size={20} color="#C7C7CC" />
@@ -158,14 +158,14 @@ export default function SettingsScreen() {
             subtitle="Get notified about upcoming renewals"
             rightComponent={
               <Switch
-                value={notifications}
-                onValueChange={setNotifications}
+                value={user.notifications}
+                onValueChange={(value) => updateUser({ notifications: value })}
                 trackColor={{
                   false: theme.colors.secondary,
                   true: theme.colors.background,
                 }}
                 thumbColor={
-                  notifications ? theme.colors.primary : theme.colors.secondary
+                  user.notifications ? theme.colors.primary : theme.colors.secondary
                 }
               />
             }
@@ -173,8 +173,8 @@ export default function SettingsScreen() {
           <SettingRow
             icon="time"
             title="Reminder Timing"
-            subtitle={`Remind me ${reminderDays} day${
-              reminderDays > 1 ? "s" : ""
+            subtitle={`Remind me ${user.reminderDays} day${
+              user.reminderDays > 1 ? "s" : ""
             } before renewal`}
             onPress={showReminderPicker}
             rightComponent={

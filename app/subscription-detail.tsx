@@ -230,8 +230,9 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: "center",
-    marginBottom: 32,
-    paddingVertical: 16,
+    marginBottom: 24,
+    paddingBottom: 16,
+    paddingTop: 0,
   },
   iconContainer: {
     width: 80,

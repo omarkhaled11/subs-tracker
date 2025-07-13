@@ -53,7 +53,7 @@ export function SubList({
       <View style={styles.container}>
         <Text style={styles.title}>Your Subscriptions</Text>
         <View style={styles.emptyState}>
-          <Text style={styles.emptyIcon}>📱</Text>
+          <Text style={styles.emptyIcon}>💸</Text>
           <Text style={styles.emptyTitle}>No subscriptions yet</Text>
           <Text style={styles.emptyDescription}>
             Tap the + button to add your first subscription
