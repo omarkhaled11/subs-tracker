@@ -46,7 +46,7 @@ export const AnalyticsSummaryCards: React.FC<AnalyticsSummaryCardsProps> = ({
           <Text style={styles.analyticsAmount}>
             {mostExpensiveSubscription 
               ? `${mostExpensiveSubscription.label}`
-              : 'No subscriptions'
+              : 'No expenses'
             }
           </Text>
           {mostExpensiveSubscription && (

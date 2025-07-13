@@ -79,7 +79,7 @@ export const SpendingPieChart: React.FC<SpendingPieChartProps> = ({
         <Text style={styles.title}>Spending Breakdown</Text>
         <View style={styles.emptyState}>
           <Text style={styles.emptyIcon}>📊</Text>
-          <Text style={styles.emptyText}>No subscriptions to display</Text>
+          <Text style={styles.emptyText}>No expenses to display</Text>
         </View>
       </View>
     );

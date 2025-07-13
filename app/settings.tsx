@@ -3,64 +3,19 @@ import {
   Text,
   View,
   ScrollView,
-  TouchableOpacity,
   Switch,
   Alert,
   SafeAreaView,
 } from "react-native";
 import { useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
 import { currencies, reminderOptions } from "../utils/constants";
 import { theme } from "../utils/theme";
 import { useSubscriptionsStore } from "../utils/store";
 import { Currency } from "../utils/types";
-
-const SettingSection = ({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) => (
-  <View style={styles.section}>
-    <Text style={styles.sectionTitle}>{title}</Text>
-    <View style={styles.sectionContent}>{children}</View>
-  </View>
-);
-
-const SettingRow = ({
-  icon,
-  title,
-  subtitle,
-  onPress,
-  rightComponent,
-}: {
-  icon: string;
-  title: string;
-  subtitle?: string;
-  onPress?: () => void;
-  rightComponent?: React.ReactNode;
-}) => (
-  <TouchableOpacity
-    style={styles.settingRow}
-    onPress={onPress}
-    disabled={!onPress}
-  >
-    <View style={styles.settingLeft}>
-      <Ionicons
-        name={icon as any}
-        size={24}
-        color={theme.colors.primary}
-        style={styles.settingIcon}
-      />
-      <View>
-        <Text style={styles.settingTitle}>{title}</Text>
-        {subtitle && <Text style={styles.settingSubtitle}>{subtitle}</Text>}
-      </View>
-    </View>
-    {rightComponent}
-  </TouchableOpacity>
-);
+import AppInfo from "../components/settings/app-info";
+import SettingsRow from "../components/settings/settings-row";
+import SettingsSection from "../components/settings/settings-section";
 
 export default function SettingsScreen() {
   const [biometricLock, setBiometricLock] = useState(false);
@@ -121,8 +76,8 @@ export default function SettingsScreen() {
           <Text style={styles.subtitle}>Manage your app preferences</Text>
         </View>
 
-        <SettingSection title="Display & Experience">
-          <SettingRow
+        <SettingsSection title="Display & Experience">
+          <SettingsRow
             icon="moon"
             title="Dark Mode"
             subtitle="Switch between light and dark themes"
@@ -140,20 +95,20 @@ export default function SettingsScreen() {
               />
             }
           />
-          <SettingRow
-            icon="cash"
+          <SettingsRow
+            icon="credit-card"
             title="Default Currency"
             subtitle={`Currently set to ${user.defaultCurrency}`}
             onPress={showCurrencyPicker}
             rightComponent={
-              <Ionicons name="chevron-forward" size={20} color="#C7C7CC" />
+              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
           />
-        </SettingSection>
+        </SettingsSection>
 
-        <SettingSection title="Notifications">
-          <SettingRow
-            icon="notifications"
+        <SettingsSection title="Notifications">
+          <SettingsRow
+            icon="bell"
             title="Push Notifications"
             subtitle="Get notified about upcoming renewals"
             rightComponent={
@@ -165,27 +120,29 @@ export default function SettingsScreen() {
                   true: theme.colors.background,
                 }}
                 thumbColor={
-                  user.notifications ? theme.colors.primary : theme.colors.secondary
+                  user.notifications
+                    ? theme.colors.primary
+                    : theme.colors.secondary
                 }
               />
             }
           />
-          <SettingRow
-            icon="time"
+          <SettingsRow
+            icon="clock"
             title="Reminder Timing"
             subtitle={`Remind me ${user.reminderDays} day${
               user.reminderDays > 1 ? "s" : ""
             } before renewal`}
             onPress={showReminderPicker}
             rightComponent={
-              <Ionicons name="chevron-forward" size={20} color="#C7C7CC" />
+              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
           />
-        </SettingSection>
+        </SettingsSection>
 
-        <SettingSection title="Privacy & Security">
-          <SettingRow
-            icon="finger-print"
+        <SettingsSection title="Privacy & Security">
+          <SettingsRow
+            icon="key"
             title="Biometric Lock"
             subtitle="Require Face ID/Touch ID to open app"
             rightComponent={
@@ -202,48 +159,50 @@ export default function SettingsScreen() {
               />
             }
           />
-          <SettingRow
-            icon="shield-checkmark"
+          <SettingsRow
+            icon="shield-check"
             title="Privacy Policy"
             onPress={() =>
               Alert.alert("Privacy Policy", "Privacy policy will open here")
             }
             rightComponent={
-              <Ionicons name="chevron-forward" size={20} color="#C7C7CC" />
+              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
           />
-          <SettingRow
-            icon="document-text"
+          <SettingsRow
+            icon="file"
             title="Terms of Service"
             onPress={() =>
               Alert.alert("Terms of Service", "Terms of service will open here")
             }
             rightComponent={
-              <Ionicons name="chevron-forward" size={20} color="#C7C7CC" />
+              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
           />
-        </SettingSection>
+        </SettingsSection>
 
-        <SettingSection title="Data Management">
-          <SettingRow
+        <SettingsSection title="Data Management">
+          <SettingsRow
             icon="download"
             title="Export Data"
             subtitle="Download your subscription data"
             onPress={handleExportData}
             rightComponent={
-              <Ionicons name="chevron-forward" size={20} color="#C7C7CC" />
+              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
           />
-          <SettingRow
+          <SettingsRow
             icon="trash"
             title="Clear All Data"
             subtitle="Permanently delete all subscriptions"
             onPress={handleClearData}
             rightComponent={
-              <Ionicons name="chevron-forward" size={20} color="#FF3B30" />
+              <Octicons name="chevron-right" size={20} color="#FF3B30" />
             }
           />
-        </SettingSection>
+        </SettingsSection>
+
+        <AppInfo />
       </ScrollView>
     </SafeAreaView>
   );
@@ -271,61 +230,6 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: theme.colors.secondary,
-    fontFamily: theme.fonts.regular,
-  },
-  section: {
-    marginTop: 16,
-    marginBottom: 16,
-    backgroundColor: theme.colors.card,
-    borderRadius: theme.borderRadius.small,
-    marginHorizontal: 16,
-    overflow: "hidden",
-  },
-  sectionContent: {
-    backgroundColor: theme.colors.card,
-    borderRadius: theme.borderRadius.small,
-    marginHorizontal: 16,
-    overflow: "hidden",
-  },
-  sectionTitle: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: theme.colors.secondary,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
-    fontFamily: theme.fonts.regular,
-  },
-  settingRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingVertical: 12,
-    minHeight: 64,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: theme.colors.border,
-  },
-  settingLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-  },
-  settingIcon: {
-    marginRight: 12,
-    width: 24,
-  },
-  settingTitle: {
-    fontSize: 17,
-    fontWeight: "400",
-    color: theme.colors.text,
-    fontFamily: theme.fonts.regular,
-  },
-  settingSubtitle: {
-    fontSize: 13,
-    color: theme.colors.secondary,
-    marginTop: 2,
     fontFamily: theme.fonts.regular,
   },
 });

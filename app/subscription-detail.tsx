@@ -11,7 +11,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useSubscriptionsStore } from "../utils/store";
 import { theme } from "../utils/theme";
 import { currencySymbols } from "../utils/constants";
-import { Ionicons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 
 export default function SubscriptionDetailScreen() {
