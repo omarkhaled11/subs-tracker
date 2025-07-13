@@ -6,7 +6,7 @@ export default function AppInfo() {
   return (
     <View style={styles.appInfo}>
       <Image source={require("../../assets/logo.png")} style={styles.logo} />
-      <Text style={styles.appName}>Summa App</Text>
+      <Text style={styles.appName}>Chrima App</Text>
       <Text style={styles.version}>
         v{Constants.expoConfig?.version}.
         {Constants.expoConfig?.ios?.buildNumber ||

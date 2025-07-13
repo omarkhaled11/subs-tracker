@@ -12,15 +12,20 @@ import { Octicons } from "@expo/vector-icons";
 import { currencies, reminderOptions } from "../utils/constants";
 import { theme } from "../utils/theme";
 import { useSubscriptionsStore } from "../utils/store";
-import { Currency } from "../utils/types";
+import { Currency, SubscriptionItem } from "../utils/types";
 import AppInfo from "../components/settings/app-info";
 import SettingsRow from "../components/settings/settings-row";
 import SettingsSection from "../components/settings/settings-section";
+import { router } from "expo-router";
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
+import * as DocumentPicker from 'expo-document-picker';
 
 export default function SettingsScreen() {
   const [biometricLock, setBiometricLock] = useState(false);
   const user = useSubscriptionsStore((state) => state.getUser());
   const updateUser = useSubscriptionsStore((state) => state.updateUser);
+  const subscriptions = useSubscriptionsStore((state) => state.subscriptions);
 
   const showCurrencyPicker = () => {
     Alert.alert("Select Currency", "Choose your preferred currency", [
@@ -48,18 +53,129 @@ export default function SettingsScreen() {
     ]);
   };
 
-  const handleExportData = async () => {};
+  const handleExportData = async () => {
+    try {
+      // Create the export data
+      const exportData = {
+        subscriptions,
+        exportDate: new Date().toISOString(),
+        version: "1.0.0" // Adding version for future compatibility
+      };
+
+      // Convert to JSON string
+      const jsonString = JSON.stringify(exportData, null, 2);
+
+      // Create filename with current date
+      const date = new Date().toISOString().split('T')[0];
+      const fileName = `subscriptions_backup_${date}.json`;
+      
+      // Get the file path in temp directory
+      const filePath = `${FileSystem.cacheDirectory}${fileName}`;
+
+      // Write the file
+      await FileSystem.writeAsStringAsync(filePath, jsonString);
+
+      // Check if sharing is available
+      const isSharingAvailable = await Sharing.isAvailableAsync();
+      
+      if (isSharingAvailable) {
+        // Share the file
+        await Sharing.shareAsync(filePath, {
+          mimeType: 'application/json',
+          dialogTitle: 'Export Subscriptions Data',
+          UTI: 'public.json' // for iOS
+        });
+      } else {
+        Alert.alert('Error', 'Sharing is not available on this device');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to export data. Please try again.');
+      console.error('Export error:', error);
+    }
+  };
+
+  const handleImportData = async () => {
+    try {
+      // Pick a JSON file
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'application/json',
+      });
+
+      if (result.canceled) {
+        return;
+      }
+
+      // Read the file content
+      const fileContent = await FileSystem.readAsStringAsync(result.assets[0].uri);
+      
+      // Parse and validate the data
+      const importedData = JSON.parse(fileContent);
+      
+      // Basic validation
+      if (!importedData.subscriptions || !Array.isArray(importedData.subscriptions)) {
+        throw new Error('Invalid file format: Missing subscriptions array');
+      }
+
+      // Validate each subscription has required fields
+      const isValidSubscription = (sub: any): sub is SubscriptionItem => {
+        return (
+          typeof sub.id === 'string' &&
+          typeof sub.label === 'string' &&
+          typeof sub.amount === 'number' &&
+          typeof sub.interval === 'string' &&
+          ['monthly', 'quarterly', 'yearly'].includes(sub.interval.toLowerCase()) &&
+          (sub.nextRenewal ? !isNaN(new Date(sub.nextRenewal).getTime()) : true)
+        );
+      };
+
+      if (!importedData.subscriptions.every(isValidSubscription)) {
+        throw new Error('Invalid subscription data in file');
+      }
+
+      // Show confirmation dialog
+      Alert.alert(
+        'Import Data',
+        subscriptions.length === 0
+          ? `Import ${importedData.subscriptions.length} subscription(s)?`
+          : `This will replace your existing ${subscriptions.length} subscription(s) with ${importedData.subscriptions.length} imported subscription(s). Continue?`,
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Import',
+            style: 'default',
+            onPress: () => {
+              // Replace subscriptions in store
+              useSubscriptionsStore.setState({ subscriptions: importedData.subscriptions });
+              Alert.alert('Success', 'Subscriptions imported successfully');
+            },
+          },
+        ]
+      );
+    } catch (error) {
+      let errorMessage = 'Failed to import data';
+      if (error instanceof Error) {
+        errorMessage = error.message.includes('Invalid') 
+          ? error.message 
+          : 'Failed to read or parse the file';
+      }
+      Alert.alert('Error', errorMessage);
+      console.error('Import error:', error);
+    }
+  };
 
   const handleClearData = () => {
     Alert.alert(
       "Clear All Data",
-      "This will permanently delete all your subscriptions. This action cannot be undone.",
+      "This will permanently delete all your expenses. This action cannot be undone.",
       [
         { text: "Cancel", style: "cancel" },
         {
           text: "Clear",
           style: "destructive",
-          onPress: () => console.log("Data cleared"),
+          onPress: () => {
+            useSubscriptionsStore.getState().clearAllSubscriptions();
+            router.back();
+          },
         },
       ]
     );
@@ -182,6 +298,15 @@ export default function SettingsScreen() {
         </SettingsSection>
 
         <SettingsSection title="Data Management">
+          <SettingsRow
+            icon="upload"
+            title="Import Data"
+            subtitle="Import subscriptions from backup"
+            onPress={handleImportData}
+            rightComponent={
+              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
+            }
+          />
           <SettingsRow
             icon="download"
             title="Export Data"
