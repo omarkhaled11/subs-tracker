@@ -8,6 +8,16 @@ import {
   convertToMonthlyAmount,
   isUpcomingRenewal,
 } from "./helpers";
+import {
+  handleNewSubscriptionNotification,
+  handleSubscriptionUpdateNotification,
+  handleSubscriptionDeleteNotification,
+  updateSubscriptionNotificationId,
+} from "../services/notifications/subscription-notifications";
+import {
+  handleNotificationStateChange,
+  handleReminderDaysChange,
+} from "../services/notifications/state-management";
 
 interface SubscriptionsStore {
   // State
@@ -63,10 +73,31 @@ export const useSubscriptionsStore = create<SubscriptionsStore>()(
         set((state) => ({
           subscriptions: [newSubscription, ...state.subscriptions],
         }));
+
+        // Schedule notification for new subscription
+        handleNewSubscriptionNotification(newSubscription).then((notificationId) => {
+          if (notificationId) {
+            updateSubscriptionNotificationId(newSubscription.id, notificationId);
+          }
+        });
       },
 
-      // Update user data
+      // Update user data with notification state management
       updateUser: (updates) => {
+        const currentUser = get().user;
+        
+        // Handle notification state changes
+        if (updates.notifications !== undefined && 
+            updates.notifications !== currentUser.notifications) {
+          handleNotificationStateChange(updates.notifications);
+        }
+
+        // Handle reminder days changes
+        if (updates.reminderDays !== undefined && 
+            updates.reminderDays !== currentUser.reminderDays) {
+          handleReminderDaysChange(updates.reminderDays);
+        }
+
         set((state) => ({
           user: { ...state.user, ...updates },
         }));
@@ -74,15 +105,38 @@ export const useSubscriptionsStore = create<SubscriptionsStore>()(
 
       // Update existing subscription
       updateSubscription: (id, updates) => {
+        const currentSubscription = get().subscriptions.find((sub) => sub.id === id);
+        if (!currentSubscription) return;
+
+        const previousNextRenewal = currentSubscription.nextRenewal;
+
         set((state) => ({
           subscriptions: state.subscriptions.map((sub) =>
             sub.id === id ? { ...sub, ...updates } : sub
           ),
         }));
+
+        // Update notification if subscription was modified
+        const updatedSubscription = get().subscriptions.find((sub) => sub.id === id);
+        if (updatedSubscription) {
+          handleSubscriptionUpdateNotification(
+            updatedSubscription,
+            previousNextRenewal
+          ).then((notificationId) => {
+            if (notificationId !== updatedSubscription.notificationId) {
+              updateSubscriptionNotificationId(id, notificationId);
+            }
+          });
+        }
       },
 
       // Delete subscription
       deleteSubscription: (id) => {
+        const subscription = get().subscriptions.find((sub) => sub.id === id);
+        if (subscription) {
+          handleSubscriptionDeleteNotification(subscription);
+        }
+
         set((state) => ({
           subscriptions: state.subscriptions.filter((sub) => sub.id !== id),
         }));
