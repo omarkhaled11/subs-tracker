@@ -136,6 +136,56 @@ export default function RootLayout() {
               gestureEnabled: true,
             }}
           />
+          <Stack.Screen
+            name="privacy-policy"
+            options={{
+              headerShown: true,
+              headerTitle: "Privacy Policy",
+              headerStyle: {
+                backgroundColor: theme.colors.background,
+              },
+              headerTintColor: theme.colors.text,
+              headerShadowVisible: false,
+              headerTitleStyle: {
+                fontWeight: "600",
+                fontFamily: theme.fonts.regular,
+              },
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => router.back()}>
+                  <Ionicons 
+                    name="arrow-back" 
+                    size={24} 
+                    color={theme.colors.text} 
+                  />
+                </TouchableOpacity>
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="terms-of-service"
+            options={{
+              headerShown: true,
+              headerTitle: "Terms of Service",
+              headerStyle: {
+                backgroundColor: theme.colors.background,
+              },
+              headerTintColor: theme.colors.text,
+              headerShadowVisible: false,
+              headerTitleStyle: {
+                fontWeight: "600",
+                fontFamily: theme.fonts.regular,
+              },
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => router.back()}>
+                  <Ionicons 
+                    name="arrow-back" 
+                    size={24} 
+                    color={theme.colors.text} 
+                  />
+                </TouchableOpacity>
+              ),
+            }}
+          />
         </Stack>
       </SafeAreaProvider>
     </GestureHandlerRootView>

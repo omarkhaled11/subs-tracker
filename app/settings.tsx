@@ -278,9 +278,7 @@ export default function SettingsScreen() {
           <SettingsRow
             icon="shield-check"
             title="Privacy Policy"
-            onPress={() =>
-              Alert.alert("Privacy Policy", "Privacy policy will open here")
-            }
+            onPress={() => router.push("/privacy-policy")}
             rightComponent={
               <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
@@ -288,9 +286,7 @@ export default function SettingsScreen() {
           <SettingsRow
             icon="file"
             title="Terms of Service"
-            onPress={() =>
-              Alert.alert("Terms of Service", "Terms of service will open here")
-            }
+            onPress={() => router.push("/terms-of-service")}
             rightComponent={
               <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
