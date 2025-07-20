@@ -7,7 +7,7 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
-import { useState } from "react";
+// import { useState } from "react";
 import { Octicons } from "@expo/vector-icons";
 import { currencies, reminderOptions } from "../utils/constants";
 import { theme } from "../utils/theme";
@@ -22,7 +22,7 @@ import * as Sharing from 'expo-sharing';
 import * as DocumentPicker from 'expo-document-picker';
 
 export default function SettingsScreen() {
-  const [biometricLock, setBiometricLock] = useState(false);
+  // const [biometricLock, setBiometricLock] = useState(false);
   const user = useSubscriptionsStore((state) => state.getUser());
   const updateUser = useSubscriptionsStore((state) => state.updateUser);
   const subscriptions = useSubscriptionsStore((state) => state.subscriptions);
@@ -192,8 +192,8 @@ export default function SettingsScreen() {
           <Text style={styles.subtitle}>Manage your app preferences</Text>
         </View>
 
-        <SettingsSection title="Display & Experience">
-          <SettingsRow
+        <SettingsSection title="Regional Settings">
+          {/* <SettingsRow
             icon="moon"
             title="Dark Mode"
             subtitle="Switch between light and dark themes"
@@ -210,10 +210,10 @@ export default function SettingsScreen() {
                 }
               />
             }
-          />
+          /> */}
           <SettingsRow
             icon="credit-card"
-            title="Default Currency"
+            title="Currency"
             subtitle={`Currently set to ${user.defaultCurrency}`}
             onPress={showCurrencyPicker}
             rightComponent={
@@ -328,7 +328,6 @@ export default function SettingsScreen() {
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -354,3 +353,4 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.regular,
   },
 });
+
