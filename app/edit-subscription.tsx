@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   TextInput as RNTextInput,
+  Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useForm, Controller } from "react-hook-form";
@@ -167,7 +168,10 @@ export default function EditSubscriptionScreen() {
                 <DropdownMenu
                   label="Billing Cycle"
                   value={value}
-                  onValueChange={onChange}
+                  onValueChange={(val) => {
+                    Keyboard.dismiss();
+                    onChange(val);
+                  }}
                   options={billingCycleOptions}
                   placeholder="Select billing cycle"
                   error={errors.interval?.message}
@@ -183,7 +187,10 @@ export default function EditSubscriptionScreen() {
                 <DatePicker
                   label="Next Renewal Date"
                   value={value || null}
-                  onDateChange={onChange}
+                  onDateChange={(date) => {
+                    Keyboard.dismiss();
+                    onChange(date);
+                  }}
                   error={errors.nextRenewal?.message}
                   minimumDate={new Date()}
                 />

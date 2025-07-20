@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import { theme } from "../../utils/theme";
 
@@ -30,7 +30,7 @@ export default function SettingsRow({
           color={theme.colors.primary}
           style={styles.settingIcon}
         />
-        <View>
+        <View style={styles.textContainer}>
           <Text style={styles.settingTitle}>{title}</Text>
           {subtitle && <Text style={styles.settingSubtitle}>{subtitle}</Text>}
         </View>
@@ -70,5 +70,8 @@ const styles = StyleSheet.create({
     color: theme.colors.secondary,
     marginTop: 2,
     fontFamily: theme.fonts.regular,
+  },
+  textContainer: {
+    maxWidth: Dimensions.get("window").width * 0.6,
   },
 });

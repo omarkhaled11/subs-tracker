@@ -7,13 +7,18 @@
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "scheme": "chrimaapp",
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#1A1A1A"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.okstudios.chrima",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
