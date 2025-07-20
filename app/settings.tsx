@@ -257,7 +257,7 @@ export default function SettingsScreen() {
         </SettingsSection>
 
         <SettingsSection title="Privacy & Security">
-          <SettingsRow
+          {/* <SettingsRow
             icon="key"
             title="Biometric Lock"
             subtitle="Require Face ID/Touch ID to open app"
@@ -274,7 +274,7 @@ export default function SettingsScreen() {
                 }
               />
             }
-          />
+          /> */}
           <SettingsRow
             icon="shield-check"
             title="Privacy Policy"
