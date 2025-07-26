@@ -14,10 +14,25 @@ export async function handleNewSubscriptionNotification(
   subscription: SubscriptionItem
 ): Promise<string | undefined> {
   try {
+    // Skip if no renewal date is set
+    if (!subscription.nextRenewal) {
+      console.log("No renewal date set, skipping notification scheduling");
+      return undefined;
+    }
+
+    console.log("Debug - New subscription notification:");
+    console.log("Subscription:", {
+      id: subscription.id,
+      label: subscription.label,
+      nextRenewal: subscription.nextRenewal,
+    });
+
     const canNotify = await checkNotificationPermissions();
     if (!canNotify) return undefined;
 
     const { reminderDays } = useSubscriptionsStore.getState().user;
+    console.log("User reminder days setting:", reminderDays);
+    
     return await scheduleSubscriptionReminder(subscription, reminderDays);
   } catch (error) {
     console.error("Error handling new subscription notification:", error);
@@ -33,6 +48,16 @@ export async function handleSubscriptionUpdateNotification(
   previousNextRenewal?: Date | null
 ): Promise<string | undefined> {
   try {
+    // Skip if no renewal date is set
+    if (!subscription.nextRenewal) {
+      console.log("No renewal date set, skipping notification scheduling");
+      // Cancel existing notification if it exists
+      if (subscription.notificationId) {
+        await cancelNotification(subscription.notificationId);
+      }
+      return undefined;
+    }
+
     const canNotify = await checkNotificationPermissions();
     if (!canNotify) return undefined;
 

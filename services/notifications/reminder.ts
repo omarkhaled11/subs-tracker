@@ -1,5 +1,5 @@
 import { SubscriptionItem } from "../../utils/types";
-import { scheduleNotification, cancelNotification } from "./index";
+import { scheduleNotification, cancelNotification, getAllScheduledNotifications } from "./index";
 import { checkNotificationPermissions } from "./permissions";
 
 // Calculate the reminder date based on subscription renewal and reminder days
@@ -7,6 +7,12 @@ function calculateReminderDate(nextRenewal: Date, reminderDays: number): Date {
   const reminderDate = new Date(nextRenewal);
   reminderDate.setDate(reminderDate.getDate() - reminderDays);
   return reminderDate;
+}
+
+// Calculate days between two dates
+function calculateDaysBetween(date1: Date, date2: Date): number {
+  const diffTime = date2.getTime() - date1.getTime();
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 }
 
 // Schedule a reminder notification for a subscription
@@ -25,19 +31,52 @@ export async function scheduleSubscriptionReminder(
       return undefined;
     }
 
-    const reminderDate = calculateReminderDate(
-      new Date(subscription.nextRenewal),
-      reminderDays
-    );
+    const nextRenewalDate = new Date(subscription.nextRenewal);
+    const now = new Date();
+    
+    console.log("Debug - Scheduling notification:");
+    console.log("Next renewal date:", nextRenewalDate.toISOString());
+    console.log("Current date:", now.toISOString());
+    console.log("Reminder days:", reminderDays);
+    
+    // Don't schedule if renewal date is in the past
+    if (nextRenewalDate.getTime() <= now.getTime()) {
+      console.log("Renewal date is in the past, skipping notification");
+      return undefined;
+    }
 
-    return await scheduleNotification(
+    // Calculate days until renewal
+    const daysUntilRenewal = calculateDaysBetween(now, nextRenewalDate);
+    console.log("Days until renewal:", daysUntilRenewal);
+
+    // Only schedule if days until renewal is greater than reminder days
+    if (daysUntilRenewal <= reminderDays) {
+      console.log("Renewal is too soon (within reminder days), skipping notification");
+      return undefined;
+    }
+
+    const reminderDate = calculateReminderDate(nextRenewalDate, reminderDays);
+    console.log("Calculated reminder date:", reminderDate.toISOString());
+
+    // Calculate actual days until renewal from the reminder date
+    const daysUntilRenewalFromReminder = calculateDaysBetween(reminderDate, nextRenewalDate);
+    console.log("Days until renewal from reminder date:", daysUntilRenewalFromReminder);
+
+    const notificationId = await scheduleNotification(
       {
         title: "Subscription Renewal Reminder",
-        body: `Your subscription for ${subscription.label} will renew in ${reminderDays} days`,
+        body: `Your subscription for ${subscription.label} will renew in ${daysUntilRenewalFromReminder} days`,
         data: { subscriptionId: subscription.id },
       },
       reminderDate
     );
+    
+    console.log("Notification scheduled with ID:", notificationId);
+
+    // Show all scheduled notifications
+    await getAllScheduledNotifications();
+    
+    return notificationId;
   } catch (error) {
     console.error("Error scheduling subscription reminder:", error);
     return undefined;

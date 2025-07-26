@@ -25,7 +25,8 @@
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#1A1A1A"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.okstudios.chrima"
     },
     "web": {
       "favicon": "./assets/logo.png"
