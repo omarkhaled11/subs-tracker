@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,51 +8,29 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
-// import { useState } from "react";
 import { Octicons } from "@expo/vector-icons";
-import { currencies, reminderOptions } from "../utils/constants";
 import { theme } from "../utils/theme";
 import { useSubscriptionsStore } from "../utils/store";
-import { Currency, SubscriptionItem } from "../utils/types";
+import { SubscriptionItem } from "../utils/types";
 import AppInfo from "../components/settings/app-info";
 import SettingsRow from "../components/settings/settings-row";
 import SettingsSection from "../components/settings/settings-section";
 import { router } from "expo-router";
-import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
-import * as DocumentPicker from 'expo-document-picker';
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import * as DocumentPicker from "expo-document-picker";
+import { CurrencyPicker } from "../components/currency-picker";
+import { ReminderTimePicker } from "../components/reminder-time-picker";
 
 export default function SettingsScreen() {
   // const [biometricLock, setBiometricLock] = useState(false);
+  const [currencyPickerVisible, setCurrencyPickerVisible] = useState(false);
+  const [reminderTimePickerVisible, setReminderTimePickerVisible] =
+    useState(false);
   const user = useSubscriptionsStore((state) => state.getUser());
   const updateUser = useSubscriptionsStore((state) => state.updateUser);
   const subscriptions = useSubscriptionsStore((state) => state.subscriptions);
 
-  const showCurrencyPicker = () => {
-    Alert.alert("Select Currency", "Choose your preferred currency", [
-      ...currencies.map((currency: Currency) => ({
-        text: currency,
-        onPress: () => updateUser({ defaultCurrency: currency }),
-      })),
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-    ]);
-  };
-
-  const showReminderPicker = () => {
-    Alert.alert("Reminder Days", "How many days before renewal?", [
-      ...reminderOptions.map((days) => ({
-        text: `${days} day${days > 1 ? "s" : ""}`,
-        onPress: () => updateUser({ reminderDays: days }),
-      })),
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-    ]);
-  };
 
   const handleExportData = async () => {
     try {
@@ -59,16 +38,16 @@ export default function SettingsScreen() {
       const exportData = {
         subscriptions,
         exportDate: new Date().toISOString(),
-        version: "1.0.0" // Adding version for future compatibility
+        version: "1.0.0", // Adding version for future compatibility
       };
 
       // Convert to JSON string
       const jsonString = JSON.stringify(exportData, null, 2);
 
       // Create filename with current date
-      const date = new Date().toISOString().split('T')[0];
+      const date = new Date().toISOString().split("T")[0];
       const fileName = `subscriptions_backup_${date}.json`;
-      
+
       // Get the file path in temp directory
       const filePath = `${FileSystem.cacheDirectory}${fileName}`;
 
@@ -77,20 +56,20 @@ export default function SettingsScreen() {
 
       // Check if sharing is available
       const isSharingAvailable = await Sharing.isAvailableAsync();
-      
+
       if (isSharingAvailable) {
         // Share the file
         await Sharing.shareAsync(filePath, {
-          mimeType: 'application/json',
-          dialogTitle: 'Export Subscriptions Data',
-          UTI: 'public.json' // for iOS
+          mimeType: "application/json",
+          dialogTitle: "Export Subscriptions Data",
+          UTI: "public.json", // for iOS
         });
       } else {
-        Alert.alert('Error', 'Sharing is not available on this device');
+        Alert.alert("Error", "Sharing is not available on this device");
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to export data. Please try again.');
-      console.error('Export error:', error);
+      Alert.alert("Error", "Failed to export data. Please try again.");
+      console.error("Export error:", error);
     }
   };
 
@@ -98,7 +77,7 @@ export default function SettingsScreen() {
     try {
       // Pick a JSON file
       const result = await DocumentPicker.getDocumentAsync({
-        type: 'application/json',
+        type: "application/json",
       });
 
       if (result.canceled) {
@@ -106,60 +85,69 @@ export default function SettingsScreen() {
       }
 
       // Read the file content
-      const fileContent = await FileSystem.readAsStringAsync(result.assets[0].uri);
-      
+      const fileContent = await FileSystem.readAsStringAsync(
+        result.assets[0].uri
+      );
+
       // Parse and validate the data
       const importedData = JSON.parse(fileContent);
-      
+
       // Basic validation
-      if (!importedData.subscriptions || !Array.isArray(importedData.subscriptions)) {
-        throw new Error('Invalid file format: Missing subscriptions array');
+      if (
+        !importedData.subscriptions ||
+        !Array.isArray(importedData.subscriptions)
+      ) {
+        throw new Error("Invalid file format: Missing subscriptions array");
       }
 
       // Validate each subscription has required fields
       const isValidSubscription = (sub: any): sub is SubscriptionItem => {
         return (
-          typeof sub.id === 'string' &&
-          typeof sub.label === 'string' &&
-          typeof sub.amount === 'number' &&
-          typeof sub.interval === 'string' &&
-          ['monthly', 'quarterly', 'yearly'].includes(sub.interval.toLowerCase()) &&
+          typeof sub.id === "string" &&
+          typeof sub.label === "string" &&
+          typeof sub.amount === "number" &&
+          typeof sub.interval === "string" &&
+          ["monthly", "quarterly", "yearly"].includes(
+            sub.interval.toLowerCase()
+          ) &&
           (sub.nextRenewal ? !isNaN(new Date(sub.nextRenewal).getTime()) : true)
         );
       };
 
       if (!importedData.subscriptions.every(isValidSubscription)) {
-        throw new Error('Invalid subscription data in file');
+        throw new Error("Invalid subscription data in file");
       }
 
       // Show confirmation dialog
       Alert.alert(
-        'Import Data',
+        "Import Data",
         subscriptions.length === 0
           ? `Import ${importedData.subscriptions.length} subscription(s)?`
           : `This will replace your existing ${subscriptions.length} subscription(s) with ${importedData.subscriptions.length} imported subscription(s). Continue?`,
         [
-          { text: 'Cancel', style: 'cancel' },
+          { text: "Cancel", style: "cancel" },
           {
-            text: 'Import',
-            style: 'default',
+            text: "Import",
+            style: "default",
             onPress: () => {
               // Replace subscriptions in store
-              useSubscriptionsStore.setState({ subscriptions: importedData.subscriptions });
-              Alert.alert('Success', 'Subscriptions imported successfully');
+              useSubscriptionsStore.setState({
+                subscriptions: importedData.subscriptions,
+              });
+              Alert.alert("Success", "Subscriptions imported successfully");
             },
           },
         ]
       );
     } catch (error) {
-      let errorMessage = 'Failed to import data';
+      let errorMessage = "Failed to import data";
       if (error instanceof Error) {
-        errorMessage = error.message.includes('Invalid') 
-          ? error.message 
-          : 'Failed to read or parse the file';
+        errorMessage = error.message.includes("Invalid")
+          ? error.message
+          : "Failed to read or parse the file";
       }
-      Alert.alert('Error', errorMessage);
-      console.error('Import error:', error);
+      Alert.alert("Error", errorMessage);
+      console.error("Import error:", error);
     }
   };
 
@@ -215,7 +203,7 @@ export default function SettingsScreen() {
             icon="credit-card"
             title="Currency"
             subtitle={`Currently set to ${user.defaultCurrency}`}
-            onPress={showCurrencyPicker}
+            onPress={() => setCurrencyPickerVisible(true)}
             rightComponent={
               <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
@@ -249,7 +237,7 @@ export default function SettingsScreen() {
             subtitle={`Remind me ${user.reminderDays} day${
               user.reminderDays > 1 ? "s" : ""
             } before renewal`}
-            onPress={showReminderPicker}
+            onPress={() => setReminderTimePickerVisible(true)}
             rightComponent={
               <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
@@ -325,6 +313,17 @@ export default function SettingsScreen() {
 
         <AppInfo />
       </ScrollView>
+
+      <CurrencyPicker
+        visible={currencyPickerVisible}
+        onClose={() => setCurrencyPickerVisible(false)}
+      />
+
+      <ReminderTimePicker
+        visible={reminderTimePickerVisible}
+        onClose={() => setReminderTimePickerVisible(false)}
+      />
+
     </SafeAreaView>
   );
 }
@@ -353,4 +352,3 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.regular,
   },
 });
-

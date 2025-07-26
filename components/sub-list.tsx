@@ -5,6 +5,7 @@ import Octicons from "@expo/vector-icons/Octicons";
 import { SubscriptionItem } from "../utils/types";
 import { theme } from "../utils/theme";
 import { currencySymbols, intervalLabels } from "../utils/constants";
+import { SortPicker } from "./sort-picker";
 
 type SortOption = "highest" | "lowest" | "nearest";
 
@@ -42,6 +43,7 @@ export function SubList({
   onItemPress,
 }: SubListProps) {
   const [sortBy, setSortBy] = useState<SortOption | null>(null);
+  const [sortPickerVisible, setSortPickerVisible] = useState(false);
 
   const handleDelete = (item: SubscriptionItem) => {
     Alert.alert(
@@ -59,27 +61,6 @@ export function SubList({
         },
       ]
     );
-  };
-
-  const handleSort = () => {
-    Alert.alert("Sort Expenses", "Choose a sorting option", [
-      {
-        text: "Highest Expense",
-        onPress: () => setSortBy("highest"),
-      },
-      {
-        text: "Lowest Expense",
-        onPress: () => setSortBy("lowest"),
-      },
-      {
-        text: "Nearest Renewal",
-        onPress: () => setSortBy("nearest"),
-      },
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-    ]);
   };
 
   const renderRightActions = (item: SubscriptionItem) => {
@@ -120,7 +101,7 @@ export function SubList({
         <Text style={styles.title}>Your Expenses</Text>
         <TouchableOpacity
           style={styles.sortButton}
-          onPress={handleSort}
+          onPress={() => setSortPickerVisible(true)}
           activeOpacity={0.8}
         >
           <Text style={styles.sortButtonText}>Sort</Text>
@@ -163,6 +144,13 @@ export function SubList({
           </View>
         ))}
       </View>
+
+      <SortPicker
+        visible={sortPickerVisible}
+        onClose={() => setSortPickerVisible(false)}
+        onSelect={setSortBy}
+      />
+
     </View>
   );
 }

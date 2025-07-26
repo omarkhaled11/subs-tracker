@@ -1,12 +1,7 @@
-import React from "react";
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  Alert,
-} from "react-native";
+import React, { useState } from "react";
+import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import { theme } from "../../utils/theme";
+import { PickerList } from "./picker";
 
 export interface DropdownOption {
   label: string;
@@ -32,25 +27,9 @@ export function DropdownMenu({
   error,
   required = false,
 }: DropdownMenuProps) {
+  const [isPickerVisible, setIsPickerVisible] = useState(false);
   const selectedOption = options.find((option) => option.value === value);
   const displayText = selectedOption ? selectedOption.label : placeholder;
-
-  const showOptionPicker = () => {
-    Alert.alert(
-      label,
-      "Choose an option",
-      [
-        ...options.map((option) => ({
-          text: option.label,
-          onPress: () => onValueChange(option.value),
-        })),
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-      ]
-    );
-  };
 
   return (
     <View style={styles.container}>
@@ -61,7 +40,7 @@ export function DropdownMenu({
 
       <TouchableOpacity
         style={[styles.dropdown, error && styles.dropdownError]}
-        onPress={showOptionPicker}
+        onPress={() => setIsPickerVisible(true)}
       >
         <Text
           style={[
@@ -75,6 +54,18 @@ export function DropdownMenu({
       </TouchableOpacity>
 
       {error && <Text style={styles.errorText}>{error}</Text>}
+
+      <PickerList
+        visible={isPickerVisible}
+        title={label}
+        subtitle={"Choose an option"}
+        options={options}
+        onClose={() => setIsPickerVisible(false)}
+        onOptionPress={(option) => {
+          onValueChange(option.value as string);
+          setIsPickerVisible(false);
+        }}
+      />
     </View>
   );
 }
