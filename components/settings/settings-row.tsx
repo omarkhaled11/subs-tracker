@@ -19,6 +19,7 @@ export default function SettingsRow({
 }: SettingsRowProps) {
   return (
     <TouchableOpacity
+      activeOpacity={0.8}
       style={styles.settingRow}
       onPress={onPress}
       disabled={!onPress}

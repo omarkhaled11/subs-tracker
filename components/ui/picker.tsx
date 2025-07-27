@@ -59,6 +59,7 @@ export const PickerList: React.FC<PickerListProps> = ({
           <View style={styles.optionsContainer}>
             {options.map((option, index) => (
               <TouchableOpacity
+                activeOpacity={0.8}
                 key={option.value}
                 onPress={() => handleOptionPress(option)}
                 style={[
@@ -75,6 +76,7 @@ export const PickerList: React.FC<PickerListProps> = ({
           </View>
 
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={onClose}
             style={[
               styles.cancelButton,

@@ -141,6 +141,7 @@ export default function SubscriptionDetailScreen() {
           {/* Action Buttons */}
           <View style={styles.actionButtonsContainer}>
             <TouchableOpacity
+              activeOpacity={0.8}
               style={[styles.actionButton, styles.editButton]}
               onPress={handleEdit}
             >
@@ -151,6 +152,7 @@ export default function SubscriptionDetailScreen() {
               />
             </TouchableOpacity>
             <TouchableOpacity
+              activeOpacity={0.8}
               style={[styles.actionButton, styles.deleteButton]}
               onPress={handleDelete}
             >

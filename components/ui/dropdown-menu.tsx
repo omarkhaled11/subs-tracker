@@ -39,6 +39,7 @@ export function DropdownMenu({
       </Text>
 
       <TouchableOpacity
+        activeOpacity={0.8}
         style={[styles.dropdown, error && styles.dropdownError]}
         onPress={() => setIsPickerVisible(true)}
       >

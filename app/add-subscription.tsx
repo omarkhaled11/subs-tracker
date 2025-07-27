@@ -184,6 +184,7 @@ export default function AddSubscriptionScreen() {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
+          activeOpacity={0.8}
           style={[styles.button, styles.cancelButton]}
           onPress={handleCancel}
         >
@@ -191,6 +192,7 @@ export default function AddSubscriptionScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity
+          activeOpacity={0.8}
           style={[styles.button, styles.saveButton]}
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}

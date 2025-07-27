@@ -160,6 +160,7 @@ export function DatePickerComponent({
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
+              activeOpacity={0.8}
               onPress={handleConfirm}
               style={styles.confirmButtonFull}
             >
@@ -167,6 +168,7 @@ export function DatePickerComponent({
             </TouchableOpacity>
 
             <TouchableOpacity
+              activeOpacity={0.8}
               onPress={handleCancel}
               style={styles.cancelButtonFull}
             >

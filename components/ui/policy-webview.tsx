@@ -26,6 +26,7 @@ export default function PolicyWebView({ url }: PolicyWebViewProps) {
           Please check your internet connection
         </Text>
         <TouchableOpacity
+          activeOpacity={0.8}
           style={styles.retryButton}
           onPress={() => setHasError(false)}
         >
