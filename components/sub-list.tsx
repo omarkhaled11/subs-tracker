@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import Octicons from "@expo/vector-icons/Octicons";
@@ -44,8 +44,18 @@ export function SubList({
 }: SubListProps) {
   const [sortBy, setSortBy] = useState<SortOption | null>(null);
   const [sortPickerVisible, setSortPickerVisible] = useState(false);
+  const swipeableRefs = useRef<{ [key: string]: Swipeable | null }>({});
+  const currentlyOpenSwipeable = useRef<string | null>(null);
+
+  const closeCurrentSwipeable = () => {
+    if (currentlyOpenSwipeable.current) {
+      swipeableRefs.current[currentlyOpenSwipeable.current]?.close();
+      currentlyOpenSwipeable.current = null;
+    }
+  };
 
   const handleDelete = (item: SubscriptionItem) => {
+    closeCurrentSwipeable();
     Alert.alert(
       "Delete Subscription",
       `Are you sure you want to delete ${item.label}?`,
@@ -96,12 +106,19 @@ export function SubList({
   }
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity 
+      style={styles.container} 
+      activeOpacity={1} 
+      onPress={closeCurrentSwipeable}
+    >
       <View style={styles.header}>
         <Text style={styles.title}>Your Expenses</Text>
         <TouchableOpacity
           style={styles.sortButton}
-          onPress={() => setSortPickerVisible(true)}
+          onPress={() => {
+            closeCurrentSwipeable();
+            setSortPickerVisible(true);
+          }}
           activeOpacity={0.8}
         >
           <Text style={styles.sortButtonText}>Sort</Text>
@@ -113,13 +130,28 @@ export function SubList({
         {sortedSubscriptions.map((item) => (
           <View key={item.id} style={styles.swipeContainer}>
             <Swipeable
+              ref={(ref) => {
+                if (ref) {
+                  swipeableRefs.current[item.id] = ref;
+                }
+              }}
               renderRightActions={() => renderRightActions(item)}
               rightThreshold={40}
               friction={2}
+              onSwipeableWillOpen={() => {
+                // Close previously opened swipeable
+                if (currentlyOpenSwipeable.current && currentlyOpenSwipeable.current !== item.id) {
+                  swipeableRefs.current[currentlyOpenSwipeable.current]?.close();
+                }
+                currentlyOpenSwipeable.current = item.id;
+              }}
             >
               <TouchableOpacity
                 style={styles.listItem}
-                onPress={() => onItemPress?.(item)}
+                onPress={() => {
+                  closeCurrentSwipeable();
+                  onItemPress?.(item);
+                }}
                 activeOpacity={1}
               >
                 <View style={styles.leftSection}>
@@ -151,7 +183,7 @@ export function SubList({
         onSelect={setSortBy}
       />
 
-    </View>
+    </TouchableOpacity>
   );
 }
 
