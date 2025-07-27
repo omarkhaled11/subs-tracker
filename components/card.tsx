@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import { SubscriptionItem } from "../utils/types";
 import { theme } from "../utils/theme";
 import { getDaysUntilRenewal } from "../utils/helpers";
@@ -87,20 +87,12 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: theme.borderRadius.small,
     padding: 16,
-    marginHorizontal: 16,
     marginVertical: 8,
-    height: 140, // Takes about 1/3 of screen height
+    marginTop: Platform.OS === "android" ? 16 : 8,
+    height: 160, // Takes about 1/3 of screen height
     alignSelf: "stretch",
     justifyContent: "center",
     alignItems: "flex-start",
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4, // For Android shadow
   },
   label: {
     fontSize: 16,

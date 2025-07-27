@@ -153,7 +153,7 @@ export const RenewalTimeline: React.FC<RenewalTimelineProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 16,
+    marginVertical: 12,
     paddingHorizontal: 16,
   },
   title: {
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width - 80,
     marginRight: 16,
     backgroundColor: theme.colors.card,
-    borderRadius: 12,
+    borderRadius: theme.borderRadius.small,
     padding: 16,
   },
   monthHeader: {
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
     backgroundColor: theme.colors.card,
-    borderRadius: 12,
+    borderRadius: theme.borderRadius.small,
   },
   emptyIcon: {
     fontSize: 32,

@@ -1,12 +1,12 @@
 import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Platform } from "react-native";
 import { router } from "expo-router";
 import { theme } from "../utils/theme";
 import { useEffect, useState } from "react";
 import { loadFonts } from "../utils/fonts";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
 export default function RootLayout() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -17,7 +17,7 @@ export default function RootLayout() {
         await loadFonts();
         setFontsLoaded(true);
       } catch (error) {
-        console.error('Error loading fonts:', error);
+        console.error("Error loading fonts:", error);
         setFontsLoaded(true); // Still render the app even if fonts fail to load
       }
     };
@@ -31,11 +31,16 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
+      <SafeAreaProvider
+        style={{
+          paddingBottom: Platform.OS === "ios" ? 0 : 24,
+          backgroundColor: theme.colors.background,
+        }}
+      >
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
-          <Stack.Screen 
-            name="analytics" 
+          <Stack.Screen
+            name="analytics"
             options={{
               headerShown: true,
               headerTitle: "",
@@ -44,19 +49,17 @@ export default function RootLayout() {
               },
               headerShadowVisible: false,
               headerLeft: () => (
-                <TouchableOpacity 
-                  onPress={() => router.back()}
-                >
-                  <Ionicons 
-                    name="arrow-back" 
-                    size={24} 
-                    color={theme.colors.text} 
+                <TouchableOpacity onPress={() => router.back()}>
+                  <Ionicons
+                    name="arrow-back"
+                    size={24}
+                    color={theme.colors.text}
                   />
                 </TouchableOpacity>
               ),
             }}
           />
-          <Stack.Screen 
+          <Stack.Screen
             name="settings"
             options={{
               headerShown: true,
@@ -66,13 +69,11 @@ export default function RootLayout() {
               },
               headerShadowVisible: false,
               headerLeft: () => (
-                <TouchableOpacity 
-                  onPress={() => router.back()}
-                >
-                  <Ionicons 
-                    name="arrow-back" 
-                    size={24} 
-                    color={theme.colors.text} 
+                <TouchableOpacity onPress={() => router.back()}>
+                  <Ionicons
+                    name="arrow-back"
+                    size={24}
+                    color={theme.colors.text}
                   />
                 </TouchableOpacity>
               ),
@@ -93,6 +94,32 @@ export default function RootLayout() {
                 fontWeight: "600",
                 fontFamily: theme.fonts.regular,
               },
+              ...(Platform.OS === "android"
+                ? {
+                    headerLeft: () => (
+                      <TouchableOpacity
+                        onPress={() => router.back()}
+                        style={{ paddingRight: 10 }}
+                      >
+                        <Ionicons
+                          name="arrow-back"
+                          size={24}
+                          color={theme.colors.text}
+                        />
+                      </TouchableOpacity>
+                    ),
+                  }
+                : {
+                    headerRight: () => (
+                      <TouchableOpacity onPress={() => router.back()}>
+                        <Ionicons
+                          name="chevron-down"
+                          size={24}
+                          color={theme.colors.text}
+                        />
+                      </TouchableOpacity>
+                    ),
+                  }),
               gestureEnabled: true,
             }}
           />
@@ -106,15 +133,32 @@ export default function RootLayout() {
               headerStyle: {
                 backgroundColor: theme.colors.background,
               },
-              headerRight: () => (
-                <TouchableOpacity onPress={() => router.back()}>
-                  <Ionicons 
-                    name="chevron-down" 
-                    size={24} 
-                    color={theme.colors.text} 
-                  />
-                </TouchableOpacity>
-              ),
+              ...(Platform.OS === "android"
+                ? {
+                    headerLeft: () => (
+                      <TouchableOpacity
+                        onPress={() => router.back()}
+                        style={{ paddingRight: 10 }}
+                      >
+                        <Ionicons
+                          name="arrow-back"
+                          size={24}
+                          color={theme.colors.text}
+                        />
+                      </TouchableOpacity>
+                    ),
+                  }
+                : {
+                    headerRight: () => (
+                      <TouchableOpacity onPress={() => router.back()}>
+                        <Ionicons
+                          name="chevron-down"
+                          size={24}
+                          color={theme.colors.text}
+                        />
+                      </TouchableOpacity>
+                    ),
+                  }),
               gestureEnabled: true,
             }}
           />
@@ -133,6 +177,32 @@ export default function RootLayout() {
                 fontWeight: "600",
                 fontFamily: theme.fonts.regular,
               },
+              ...(Platform.OS === "android"
+                ? {
+                    headerLeft: () => (
+                      <TouchableOpacity
+                        onPress={() => router.back()}
+                        style={{ paddingRight: 10 }}
+                      >
+                        <Ionicons
+                          name="arrow-back"
+                          size={24}
+                          color={theme.colors.text}
+                        />
+                      </TouchableOpacity>
+                    ),
+                  }
+                : {
+                    headerRight: () => (
+                      <TouchableOpacity onPress={() => router.back()}>
+                        <Ionicons
+                          name="chevron-down"
+                          size={24}
+                          color={theme.colors.text}
+                        />
+                      </TouchableOpacity>
+                    ),
+                  }),
               gestureEnabled: true,
             }}
           />
@@ -151,11 +221,14 @@ export default function RootLayout() {
                 fontFamily: theme.fonts.regular,
               },
               headerLeft: () => (
-                <TouchableOpacity onPress={() => router.back()}>
-                  <Ionicons 
-                    name="arrow-back" 
-                    size={24} 
-                    color={theme.colors.text} 
+                <TouchableOpacity
+                  onPress={() => router.back()}
+                  style={{ paddingRight: Platform.OS === "ios" ? 0 : 10 }}
+                >
+                  <Ionicons
+                    name="arrow-back"
+                    size={24}
+                    color={theme.colors.text}
                   />
                 </TouchableOpacity>
               ),
@@ -176,11 +249,14 @@ export default function RootLayout() {
                 fontFamily: theme.fonts.regular,
               },
               headerLeft: () => (
-                <TouchableOpacity onPress={() => router.back()}>
-                  <Ionicons 
-                    name="arrow-back" 
-                    size={24} 
-                    color={theme.colors.text} 
+                <TouchableOpacity
+                  onPress={() => router.back()}
+                  style={{ paddingRight: Platform.OS === "ios" ? 0 : 10 }}
+                >
+                  <Ionicons
+                    name="arrow-back"
+                    size={24}
+                    color={theme.colors.text}
                   />
                 </TouchableOpacity>
               ),

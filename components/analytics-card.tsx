@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.regular,
   },
   analyticsAmount: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     color: theme.colors.text,
     marginBottom: 2,
