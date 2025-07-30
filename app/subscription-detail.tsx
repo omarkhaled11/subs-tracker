@@ -5,7 +5,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Text,
-  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
@@ -13,13 +12,15 @@ import { useSubscriptionsStore } from "../utils/store";
 import { theme } from "../utils/theme";
 import { currencySymbols } from "../utils/constants";
 import { Octicons } from "@expo/vector-icons";
+import { useConfirmationDialogStore } from "../utils/confirmation-dialog-store";
+import { ConfirmationDialog } from "../components/ui/confirmation-dialog";
 
 export default function SubscriptionDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const getSubscription = useSubscriptionsStore(
     (state: any) => state.getSubscription
   );
-
+  const { showConfirmDialog } = useConfirmationDialogStore();
   const subscription = id ? getSubscription(id) : null;
 
   if (!subscription) {
@@ -86,26 +87,18 @@ export default function SubscriptionDetailScreen() {
   };
 
   const handleDelete = () => {
-    Alert.alert(
-      "Delete Expense",
-      `Are you sure you want to delete ${subscription.label}?`,
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: () => {
-            const deleteSubscription =
-              useSubscriptionsStore.getState().deleteSubscription;
-            deleteSubscription(id);
-            router.back();
-          },
-        },
-      ]
-    );
+    showConfirmDialog({
+      title: "Delete Subscription",
+      subtitle: `Are you sure you want to delete ${subscription.label}?`,
+      confirmText: "Delete",
+      destructive: true,
+      onConfirm: () => {
+        const deleteSubscription =
+          useSubscriptionsStore.getState().deleteSubscription;
+        deleteSubscription(id);
+        router.back();
+      },
+    });
   };
 
   return (
@@ -264,6 +257,7 @@ export default function SubscriptionDetailScreen() {
           </View>
         </View>
       </ScrollView>
+      <ConfirmationDialog />
     </SafeAreaView>
   );
 }

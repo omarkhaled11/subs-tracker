@@ -1,11 +1,12 @@
 import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import Octicons from "@expo/vector-icons/Octicons";
 import { SubscriptionItem } from "../utils/types";
 import { theme } from "../utils/theme";
 import { currencySymbols, intervalLabels } from "../utils/constants";
 import { SortPicker } from "./sort-picker";
+import { useConfirmationDialogStore } from "../utils/confirmation-dialog-store";
 
 type SortOption = "highest" | "lowest" | "nearest";
 
@@ -46,6 +47,7 @@ export function SubList({
   const [sortPickerVisible, setSortPickerVisible] = useState(false);
   const swipeableRefs = useRef<{ [key: string]: Swipeable | null }>({});
   const currentlyOpenSwipeable = useRef<string | null>(null);
+  const { showConfirmDialog } = useConfirmationDialogStore();
 
   const closeCurrentSwipeable = () => {
     if (currentlyOpenSwipeable.current) {
@@ -56,21 +58,13 @@ export function SubList({
 
   const handleDelete = (item: SubscriptionItem) => {
     closeCurrentSwipeable();
-    Alert.alert(
-      "Delete Subscription",
-      `Are you sure you want to delete ${item.label}?`,
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: () => onDelete?.(item.id),
-        },
-      ]
-    );
+    showConfirmDialog({
+      title: "Delete Subscription",
+      subtitle: `Are you sure you want to delete ${item.label}?`,
+      confirmText: "Delete",
+      destructive: true,
+      onConfirm: () => onDelete?.(item.id),
+    });
   };
 
   const renderRightActions = (item: SubscriptionItem) => {
@@ -106,9 +100,9 @@ export function SubList({
   }
 
   return (
-    <TouchableOpacity 
-      style={styles.container} 
-      activeOpacity={1} 
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={1}
       onPress={closeCurrentSwipeable}
     >
       <View style={styles.header}>
@@ -140,8 +134,13 @@ export function SubList({
               friction={2}
               onSwipeableWillOpen={() => {
                 // Close previously opened swipeable
-                if (currentlyOpenSwipeable.current && currentlyOpenSwipeable.current !== item.id) {
-                  swipeableRefs.current[currentlyOpenSwipeable.current]?.close();
+                if (
+                  currentlyOpenSwipeable.current &&
+                  currentlyOpenSwipeable.current !== item.id
+                ) {
+                  swipeableRefs.current[
+                    currentlyOpenSwipeable.current
+                  ]?.close();
                 }
                 currentlyOpenSwipeable.current = item.id;
               }}
@@ -182,7 +181,6 @@ export function SubList({
         onClose={() => setSortPickerVisible(false)}
         onSelect={setSortBy}
       />
-
     </TouchableOpacity>
   );
 }
@@ -217,7 +215,6 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.regular,
   },
   listContainer: {
-    // Removed flex: 1 and replaced ScrollView with View
   },
   emptyState: {
     flex: 1,

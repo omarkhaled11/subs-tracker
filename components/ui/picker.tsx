@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     maxWidth: 320,
-    borderRadius: theme.borderRadius.large,
+    borderRadius: theme.borderRadius.medium,
     overflow: "hidden",
   },
   title: {

@@ -9,6 +9,7 @@ import { loadFonts } from "../utils/fonts";
 import { Ionicons } from "@expo/vector-icons";
 import { ErrorBoundary } from "../components/ErrorBoundary";
 import { errorLogger } from "../utils/errorLogger";
+import { ConfirmationDialog } from "../components/ui/confirmation-dialog";
 
 export default function RootLayout() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -266,6 +267,7 @@ export default function RootLayout() {
             }}
           />
           </Stack>
+          <ConfirmationDialog />
         </SafeAreaProvider>
       </GestureHandlerRootView>
     </ErrorBoundary>

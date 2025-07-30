@@ -22,6 +22,7 @@ import * as Sharing from "expo-sharing";
 import * as DocumentPicker from "expo-document-picker";
 import { CurrencyPicker } from "../components/currency-picker";
 import { ReminderTimePicker } from "../components/reminder-time-picker";
+import { useConfirmationDialogStore } from "../utils/confirmation-dialog-store";
 
 export default function SettingsScreen() {
   // const [biometricLock, setBiometricLock] = useState(false);
@@ -31,6 +32,7 @@ export default function SettingsScreen() {
   const user = useSubscriptionsStore((state) => state.getUser());
   const updateUser = useSubscriptionsStore((state) => state.updateUser);
   const subscriptions = useSubscriptionsStore((state) => state.subscriptions);
+  const { showConfirmDialog } = useConfirmationDialogStore();
 
   const handleExportData = async () => {
     try {
@@ -119,26 +121,21 @@ export default function SettingsScreen() {
       }
 
       // Show confirmation dialog
-      Alert.alert(
-        "Import Data",
-        subscriptions.length === 0
-          ? `Import ${importedData.subscriptions.length} subscription(s)?`
-          : `This will replace your existing ${subscriptions.length} subscription(s) with ${importedData.subscriptions.length} imported subscription(s). Continue?`,
-        [
-          { text: "Cancel", style: "cancel" },
-          {
-            text: "Import",
-            style: "default",
-            onPress: () => {
-              // Replace subscriptions in store
-              useSubscriptionsStore.setState({
-                subscriptions: importedData.subscriptions,
-              });
-              Alert.alert("Success", "Subscriptions imported successfully");
-            },
-          },
-        ]
-      );
+      showConfirmDialog({
+        title: "Import Data",
+        subtitle:
+          subscriptions.length === 0
+            ? `Import ${importedData.subscriptions.length} subscription(s)?`
+            : `This will replace your existing ${subscriptions.length} subscription(s) with ${importedData.subscriptions.length} imported subscription(s). Continue?`,
+        confirmText: "Import",
+        onConfirm: () => {
+          // Replace subscriptions in store
+          useSubscriptionsStore.setState({
+            subscriptions: importedData.subscriptions,
+          });
+          Alert.alert("Success", "Subscriptions imported successfully");
+        },
+      });
     } catch (error) {
       let errorMessage = "Failed to import data";
       if (error instanceof Error) {
@@ -152,27 +149,41 @@ export default function SettingsScreen() {
   };
 
   const handleClearData = () => {
-    Alert.alert(
-      "Clear All Data",
-      "This will permanently delete all your expenses. This action cannot be undone.",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Clear",
-          style: "destructive",
-          onPress: () => {
-            useSubscriptionsStore.getState().clearAllSubscriptions();
-            router.back();
-          },
-        },
-      ]
-    );
+    showConfirmDialog({
+      title: "Clear All Data",
+      subtitle:
+        "This will permanently delete all your subscriptions. This action cannot be undone.",
+      confirmText: "Clear",
+      destructive: true,
+      onConfirm: () => {
+        useSubscriptionsStore.getState().clearAllSubscriptions();
+        router.back();
+      },
+    });
+  };
+
+  const handleRateApp = () => {
+    showConfirmDialog({
+      title: "Enjoying Chrima?",
+      subtitle: "Your feedback helps us create better experiences for everyone. Would you like to rate us on the App Store?",
+      confirmText: "Yes",
+      cancelText: "Not Now",
+      onConfirm: () => {
+        // TODO: Trigger native store rating
+        console.log("User wants to rate - show native store rating");
+      },
+      onCancel: () => {
+        // Do nothing for now as requested
+        console.log("User declined rating");
+      },
+    });
   };
 
   const handleSendFeedback = async () => {
-    const mailtoUrl = "mailto:chrima.feedback+info.okstudios@gmail.com?subject=Chrima%20App%20Feedback";
+    const mailtoUrl =
+      "mailto:chrima.feedback+info.okstudios@gmail.com?subject=Chrima%20App%20Feedback";
     const canOpen = await Linking.canOpenURL(mailtoUrl);
-    
+
     if (canOpen) {
       await Linking.openURL(mailtoUrl);
     } else {
@@ -297,9 +308,7 @@ export default function SettingsScreen() {
             icon="star"
             title="Rate App"
             subtitle="Love using Chrima? Let us know!"
-            onPress={() => {
-              // TODO: Implement app store rating
-            }}
+            onPress={handleRateApp}
             rightComponent={
               <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
