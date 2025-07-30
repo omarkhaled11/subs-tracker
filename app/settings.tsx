@@ -7,6 +7,7 @@ import {
   Switch,
   Alert,
   SafeAreaView,
+  Linking,
 } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import { theme } from "../utils/theme";
@@ -30,7 +31,6 @@ export default function SettingsScreen() {
   const user = useSubscriptionsStore((state) => state.getUser());
   const updateUser = useSubscriptionsStore((state) => state.updateUser);
   const subscriptions = useSubscriptionsStore((state) => state.subscriptions);
-
 
   const handleExportData = async () => {
     try {
@@ -169,6 +169,17 @@ export default function SettingsScreen() {
     );
   };
 
+  const handleSendFeedback = async () => {
+    const mailtoUrl = "mailto:chrima.feedback+info.okstudios@gmail.com?subject=Chrima%20App%20Feedback";
+    const canOpen = await Linking.canOpenURL(mailtoUrl);
+    
+    if (canOpen) {
+      await Linking.openURL(mailtoUrl);
+    } else {
+      Alert.alert("Error", "Could not open email client");
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -281,6 +292,29 @@ export default function SettingsScreen() {
           />
         </SettingsSection>
 
+        <SettingsSection title="Support & Feedback">
+          <SettingsRow
+            icon="star"
+            title="Rate App"
+            subtitle="Love using Chrima? Let us know!"
+            onPress={() => {
+              // TODO: Implement app store rating
+            }}
+            rightComponent={
+              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
+            }
+          />
+          <SettingsRow
+            icon="comment-discussion"
+            title="Send Feedback"
+            subtitle="Help us improve your experience"
+            onPress={handleSendFeedback}
+            rightComponent={
+              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
+            }
+          />
+        </SettingsSection>
+
         <SettingsSection title="Data Management">
           <SettingsRow
             icon="upload"
@@ -323,7 +357,6 @@ export default function SettingsScreen() {
         visible={reminderTimePickerVisible}
         onClose={() => setReminderTimePickerVisible(false)}
       />
-
     </SafeAreaView>
   );
 }

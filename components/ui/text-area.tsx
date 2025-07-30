@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextInput as RNTextInput, StyleSheet, Text, View, Keyboard } from 'react-native';
+import { theme } from '../../utils/theme';
 
 interface TextAreaProps {
   label: string;
@@ -71,23 +72,25 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: theme.colors.text,
     marginBottom: 8,
+    fontFamily: theme.fonts.regular,
   },
   required: {
-    color: '#FF3B30',
+    color: theme.colors.primary,
+    fontFamily: theme.fonts.regular,
   },
   textArea: {
     borderWidth: 1,
-    borderColor: '#E5E5E7',
+    borderColor: theme.colors.border,
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.card,
     minHeight: 100,
   },
   textAreaError: {
-    borderColor: '#FF3B30',
+    borderColor: theme.colors.primary,
   },
   footer: {
     flexDirection: 'row',
@@ -96,12 +99,14 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   errorText: {
-    color: '#FF3B30',
+    color: theme.colors.primary,
     fontSize: 14,
     flex: 1,
+    fontFamily: theme.fonts.regular,
   },
   characterCount: {
-    color: '#666',
+    color: theme.colors.secondary,
     fontSize: 12,
+    fontFamily: theme.fonts.regular,
   },
 }); 
