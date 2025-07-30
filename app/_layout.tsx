@@ -7,6 +7,8 @@ import { theme } from "../utils/theme";
 import { useEffect, useState } from "react";
 import { loadFonts } from "../utils/fonts";
 import { Ionicons } from "@expo/vector-icons";
+import { ErrorBoundary } from "../components/ErrorBoundary";
+import { errorLogger } from "../utils/errorLogger";
 
 export default function RootLayout() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -30,14 +32,15 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider
-        style={{
-          paddingBottom: Platform.OS === "ios" ? 0 : 24,
-          backgroundColor: theme.colors.background,
-        }}
-      >
-        <Stack screenOptions={{ headerShown: false }}>
+    <ErrorBoundary onError={(error, errorInfo) => errorLogger.logError(error, errorInfo)}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaProvider
+          style={{
+            paddingBottom: Platform.OS === "ios" ? 0 : 24,
+            backgroundColor: theme.colors.background,
+          }}
+        >
+          <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
           <Stack.Screen
             name="analytics"
@@ -262,8 +265,9 @@ export default function RootLayout() {
               ),
             }}
           />
-        </Stack>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+          </Stack>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+    </ErrorBoundary>
   );
 }
