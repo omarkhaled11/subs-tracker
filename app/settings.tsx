@@ -23,6 +23,7 @@ import * as DocumentPicker from "expo-document-picker";
 import { CurrencyPicker } from "../components/currency-picker";
 import { ReminderTimePicker } from "../components/reminder-time-picker";
 import { useConfirmationDialogStore } from "../utils/confirmation-dialog-store";
+import { storeRating } from "../utils/storeRating";
 
 export default function SettingsScreen() {
   // const [biometricLock, setBiometricLock] = useState(false);
@@ -168,13 +169,27 @@ export default function SettingsScreen() {
       subtitle: "Your feedback helps us create better experiences for everyone. Would you like to rate us on the App Store?",
       confirmText: "Yes",
       cancelText: "Not Now",
-      onConfirm: () => {
-        // TODO: Trigger native store rating
-        console.log("User wants to rate - show native store rating");
+      onConfirm: async () => {
+        try {
+          const success = await storeRating.openStoreReview();
+          if (!success) {
+            // Fallback if store rating fails
+            Alert.alert(
+              "Unable to Open Store",
+              "We couldn't open the app store. Please search for 'Chrima' in your app store to leave a review."
+            );
+          }
+        } catch (error) {
+          console.error("Store rating error:", error);
+          Alert.alert(
+            "Error",
+            "Something went wrong. Please try again later."
+          );
+        }
       },
-      onCancel: () => {
-        // Do nothing for now as requested
-        console.log("User declined rating");
+      onCancel: async () => {
+        // Record that user was prompted (for analytics/frequency control)
+        await storeRating.recordPrompt();
       },
     });
   };
@@ -305,19 +320,19 @@ export default function SettingsScreen() {
 
         <SettingsSection title="Support & Feedback">
           <SettingsRow
-            icon="star"
-            title="Rate App"
-            subtitle="Love using Chrima? Let us know!"
-            onPress={handleRateApp}
+            icon="comment-discussion"
+            title="Send Feedback"
+            subtitle="Help us improve your experience"
+            onPress={handleSendFeedback}
             rightComponent={
               <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
           />
           <SettingsRow
-            icon="comment-discussion"
-            title="Send Feedback"
-            subtitle="Help us improve your experience"
-            onPress={handleSendFeedback}
+            icon="star"
+            title="Rate App"
+            subtitle="Love using Chrima? Let us know!"
+            onPress={handleRateApp}
             rightComponent={
               <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }

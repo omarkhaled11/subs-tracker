@@ -18,6 +18,7 @@ import {
   handleNotificationStateChange,
   handleReminderDaysChange,
 } from "../services/notifications/state-management";
+import { smartRatingTrigger } from "./smartRatingTrigger";
 
 interface SubscriptionsStore {
   // State
@@ -74,12 +75,18 @@ export const useSubscriptionsStore = create<SubscriptionsStore>()(
           subscriptions: [newSubscription, ...state.subscriptions],
         }));
 
+        // Get the new subscription count for rating trigger
+        const newSubscriptionCount = get().subscriptions.length;
+
         // Schedule notification for new subscription
         handleNewSubscriptionNotification(newSubscription).then((notificationId) => {
           if (notificationId) {
             updateSubscriptionNotificationId(newSubscription.id, notificationId);
           }
         });
+
+        // Check if we should trigger rating prompt
+        smartRatingTrigger.checkSubscriptionMilestone(newSubscriptionCount);
       },
 
       // Update user data with notification state management
