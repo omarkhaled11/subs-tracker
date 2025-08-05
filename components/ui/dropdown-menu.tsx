@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View, Keyboard } from "react-native";
 import { theme } from "../../utils/theme";
 import { PickerList } from "./picker";
 
@@ -41,7 +41,10 @@ export function DropdownMenu({
       <TouchableOpacity
         activeOpacity={0.8}
         style={[styles.dropdown, error && styles.dropdownError]}
-        onPress={() => setIsPickerVisible(true)}
+        onPress={() => {
+          Keyboard.dismiss();
+          setIsPickerVisible(true);
+        }}
       >
         <Text
           style={[

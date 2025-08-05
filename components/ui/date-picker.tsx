@@ -7,6 +7,7 @@ import {
   Modal,
   Platform,
   Animated,
+  Keyboard,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { theme } from "../../utils/theme";
@@ -58,6 +59,7 @@ export function DatePickerComponent({
   };
 
   const showDatePicker = () => {
+    Keyboard.dismiss();
     setTempDate(value || new Date());
     setOpen(true);
     

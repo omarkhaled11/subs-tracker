@@ -150,10 +150,7 @@ export default function AddSubscriptionScreen() {
                 <DropdownMenu
                   label="Billing Cycle"
                   value={value}
-                  onValueChange={(val) => {
-                    Keyboard.dismiss();
-                    onChange(val);
-                  }}
+                  onValueChange={onChange}
                   options={billingCycleOptions}
                   placeholder="Select billing cycle"
                   error={errors.interval?.message}
@@ -169,10 +166,7 @@ export default function AddSubscriptionScreen() {
                 <DatePicker
                   label="Next Renewal Date"
                   value={value || null}
-                  onDateChange={(date) => {
-                    Keyboard.dismiss();
-                    onChange(date);
-                  }}
+                  onDateChange={onChange}
                   error={errors.nextRenewal?.message}
                   minimumDate={new Date()}
                 />
