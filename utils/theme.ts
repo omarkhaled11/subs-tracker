@@ -2,6 +2,7 @@ export const darkTheme = {
   colors: {
     primary: "#84CC16",
     secondary: "#808080",
+    secondaryText: "#CCCCCC",
     text: "#FFFFFF",
     background: "#1A1A1A",
     border: "#333333",
@@ -31,6 +32,7 @@ export const lightTheme = {
   colors: {
     primary: "#84CC16",
     secondary: "#808080",
+    secondaryText: "#CCCCCC",
     text: "#000000",
     background: "#FFFFFF",
     border: "#333333",

@@ -17,6 +17,6 @@ export type UserData = {
   reminderDays: number;
 };
 
-export type Currency = "USD" | "EUR" | "GBP" | "CAD" | "AUD";
+export type Currency = "USD" | "EUR" | "GBP" | "CAD" | "AUD" | "EGP";
 
 export type SubscriptionInterval = "monthly" | "quarterly" | "yearly";
