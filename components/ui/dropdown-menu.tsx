@@ -50,6 +50,7 @@ export function DropdownMenu({
           style={[
             styles.dropdownText,
             !selectedOption && styles.placeholderText,
+            selectedOption && styles.selectedText,
           ]}
         >
           {displayText}
@@ -104,12 +105,15 @@ const styles = StyleSheet.create({
   },
   dropdownText: {
     fontSize: 16,
-    color: theme.colors.secondary,
     flex: 1,
     fontFamily: theme.fonts.regular,
   },
   placeholderText: {
     color: theme.colors.secondary,
+    fontFamily: theme.fonts.regular,
+  },
+  selectedText: {
+    color: "white",
     fontFamily: theme.fonts.regular,
   },
   arrow: {

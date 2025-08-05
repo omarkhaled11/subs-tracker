@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 import { SubscriptionItem } from "../utils/types";
 import { theme } from "../utils/theme";
 
@@ -115,7 +116,7 @@ export const RenewalTimeline: React.FC<RenewalTimelineProps> = ({
             </View>
             <View style={styles.renewalsList}>
               {month.renewals.map((renewal, rIndex) => (
-                <View
+                <TouchableOpacity
                   key={rIndex}
                   style={[
                     styles.renewalItem,
@@ -125,6 +126,10 @@ export const RenewalTimeline: React.FC<RenewalTimelineProps> = ({
                       ),
                     },
                   ]}
+                  onPress={() => {
+                    router.push(`/subscription-detail?id=${renewal.subscription.id}`);
+                  }}
+                  activeOpacity={0.9}
                 >
                   <Text style={styles.renewalLabel}>
                     {renewal.subscription.label}
@@ -141,7 +146,7 @@ export const RenewalTimeline: React.FC<RenewalTimelineProps> = ({
                       <Text style={styles.reminderText}>🔔</Text>
                     </View>
                   )}
-                </View>
+                </TouchableOpacity>
               ))}
             </View>
           </View>
