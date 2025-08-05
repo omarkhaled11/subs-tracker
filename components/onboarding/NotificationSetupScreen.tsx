@@ -1,23 +1,61 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Switch, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Switch, SafeAreaView, TouchableOpacity, Alert } from "react-native";
 import { OnboardingButton } from "./OnboardingButton";
 import { StepIndicator } from "./StepIndicator";
 import { theme } from "../../utils/theme";
+import { useSubscriptionsStore } from "../../utils/store";
+import { initializeNotifications } from "../../services/notifications";
 
 interface NotificationSetupScreenProps {
-  onContinue: (notificationsEnabled: boolean, reminderDays?: number) => void;
+  onContinue: () => void;
 }
 
 export const NotificationSetupScreen: React.FC<NotificationSetupScreenProps> = ({ 
   onContinue 
 }) => {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const [selectedReminderDays, setSelectedReminderDays] = useState(7);
+  const { updateUser, getUser } = useSubscriptionsStore();
+  const currentUser = getUser();
+  const [notificationsEnabled, setNotificationsEnabled] = useState(currentUser.notifications);
+  const [selectedReminderDays, setSelectedReminderDays] = useState(currentUser.reminderDays);
 
   const reminderOptions = [1, 3, 7, 14, 30];
 
+  const handleNotificationToggle = async (value: boolean) => {
+    if (value) {
+      // Request system permissions when enabling notifications
+      try {
+        const hasPermission = await initializeNotifications();
+        if (hasPermission) {
+          setNotificationsEnabled(true);
+        } else {
+          Alert.alert(
+            "Permission Required",
+            "Please enable notifications in your device settings to receive subscription reminders.",
+            [{ text: "OK" }]
+          );
+          setNotificationsEnabled(false);
+        }
+      } catch (error) {
+        console.error("Error requesting notification permissions:", error);
+        Alert.alert(
+          "Error",
+          "Unable to set up notifications. Please try again later.",
+          [{ text: "OK" }]
+        );
+        setNotificationsEnabled(false);
+      }
+    } else {
+      setNotificationsEnabled(false);
+    }
+  };
+
   const handleContinue = () => {
-    onContinue(notificationsEnabled, notificationsEnabled ? selectedReminderDays : undefined);
+    // Update the store with notification preferences
+    updateUser({ 
+      notifications: notificationsEnabled,
+      reminderDays: selectedReminderDays
+    });
+    onContinue();
   };
 
   const ReminderDayOption = ({ days }: { days: number }) => (
@@ -64,7 +102,7 @@ export const NotificationSetupScreen: React.FC<NotificationSetupScreenProps> = (
               </Text>
               <Switch
                 value={notificationsEnabled}
-                onValueChange={setNotificationsEnabled}
+                onValueChange={handleNotificationToggle}
                 trackColor={{
                   false: theme.colors.border,
                   true: theme.colors.primary + "40",

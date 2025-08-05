@@ -1,16 +1,18 @@
 import React from "react";
 import { OnboardingFlow } from "../components/onboarding/OnboardingFlow";
 import { router } from "expo-router";
-import { Currency } from "../utils/types";
+import { useSubscriptionsStore } from "../utils/store";
 
 export default function OnboardingPage() {
-  const handleOnboardingComplete = (data: {
-    currency: Currency;
-    notificationsEnabled: boolean;
-    reminderDays?: number;
-  }) => {
-    console.log("Onboarding completed with data:", data);
-    // For now, just navigate to home
+  const { updateUser } = useSubscriptionsStore();
+
+  const handleOnboardingComplete = () => {
+    console.log("Onboarding completed");
+    
+    // Mark onboarding as completed in the store
+    updateUser({ hasOnboarded: true });
+    
+    // Navigate to home screen
     router.replace("/");
   };
 

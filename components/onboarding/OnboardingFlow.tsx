@@ -4,31 +4,22 @@ import { WelcomeScreen } from "./WelcomeScreen";
 import { CurrencySetupScreen } from "./CurrencySetupScreen";
 import { NotificationSetupScreen } from "./NotificationSetupScreen";
 import { ReadyScreen } from "./ReadyScreen";
-import { Currency } from "../../utils/types";
 
-const { width: screenWidth } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get("window");
 
 interface OnboardingFlowProps {
-  onComplete: (data: {
-    currency: Currency;
-    notificationsEnabled: boolean;
-    reminderDays?: number;
-  }) => void;
+  onComplete: () => void;
 }
 
-export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete }) => {
+export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
+  onComplete,
+}) => {
   const [currentScreen, setCurrentScreen] = useState(0);
   const slideAnim = useRef(new Animated.Value(0)).current;
-  
-  const [onboardingData, setOnboardingData] = useState({
-    currency: "USD" as Currency,
-    notificationsEnabled: false,
-    reminderDays: undefined as number | undefined,
-  });
 
   const animateToNext = () => {
     const nextScreen = currentScreen + 1;
-    
+
     Animated.timing(slideAnim, {
       toValue: -nextScreen * screenWidth,
       duration: 250,
@@ -38,31 +29,17 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete }) =>
     });
   };
 
-  const handleWelcomeContinue = () => {
-    animateToNext();
-  };
-
-  const handleCurrencySetup = (currency: Currency) => {
-    setOnboardingData(prev => ({ ...prev, currency }));
-    animateToNext();
-  };
-
-  const handleNotificationSetup = (notificationsEnabled: boolean, reminderDays?: number) => {
-    setOnboardingData(prev => ({ 
-      ...prev, 
-      notificationsEnabled, 
-      reminderDays 
-    }));
+  const handleContinue = () => {
     animateToNext();
   };
 
   const handleFinish = () => {
-    onComplete(onboardingData);
+    onComplete();
   };
 
   return (
     <View style={styles.container}>
-      <Animated.View 
+      <Animated.View
         style={[
           styles.screensContainer,
           {
@@ -71,13 +48,13 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete }) =>
         ]}
       >
         <View style={styles.screen}>
-          <WelcomeScreen onContinue={handleWelcomeContinue} />
+          <WelcomeScreen onContinue={handleContinue} />
         </View>
         <View style={styles.screen}>
-          <CurrencySetupScreen onContinue={handleCurrencySetup} />
+          <CurrencySetupScreen onContinue={handleContinue} />
         </View>
         <View style={styles.screen}>
-          <NotificationSetupScreen onContinue={handleNotificationSetup} />
+          <NotificationSetupScreen onContinue={handleContinue} />
         </View>
         <View style={styles.screen}>
           <ReadyScreen onFinish={handleFinish} />
@@ -90,11 +67,11 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete }) =>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   screensContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     width: screenWidth * 4, // 4 screens total
   },
   screen: {

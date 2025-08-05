@@ -10,9 +10,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { ErrorBoundary } from "../components/ErrorBoundary";
 import { errorLogger } from "../utils/errorLogger";
 import { ConfirmationDialog } from "../components/ui/confirmation-dialog";
+import { useSubscriptionsStore } from "../utils/store";
+import OnboardingPage from "./onboarding";
 
 export default function RootLayout() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const { getUser } = useSubscriptionsStore();
+  const user = getUser();
 
   useEffect(() => {
     const loadAppFonts = async () => {
@@ -33,7 +37,9 @@ export default function RootLayout() {
   }
 
   return (
-    <ErrorBoundary onError={(error, errorInfo) => errorLogger.logError(error, errorInfo)}>
+    <ErrorBoundary
+      onError={(error, errorInfo) => errorLogger.logError(error, errorInfo)}
+    >
       <GestureHandlerRootView style={{ flex: 1 }}>
         <SafeAreaProvider
           style={{
@@ -41,233 +47,237 @@ export default function RootLayout() {
             backgroundColor: theme.colors.background,
           }}
         >
-          <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="onboarding" />
-          <Stack.Screen name="index" />
-          <Stack.Screen
-            name="analytics"
-            options={{
-              headerShown: true,
-              headerTitle: "",
-              headerStyle: {
-                backgroundColor: theme.colors.background,
-              },
-              headerShadowVisible: false,
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => router.back()}>
-                  <Ionicons
-                    name="arrow-back"
-                    size={24}
-                    color={theme.colors.text}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="settings"
-            options={{
-              headerShown: true,
-              headerTitle: "",
-              headerStyle: {
-                backgroundColor: theme.colors.background,
-              },
-              headerShadowVisible: false,
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => router.back()}>
-                  <Ionicons
-                    name="arrow-back"
-                    size={24}
-                    color={theme.colors.text}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="add-subscription"
-            options={{
-              presentation: "modal",
-              headerShown: true,
-              headerShadowVisible: false,
-              headerTitle: "Add Expense",
-              headerStyle: {
-                backgroundColor: theme.colors.background,
-              },
-              headerTintColor: theme.colors.text,
-              headerTitleStyle: {
-                fontWeight: "600",
-                fontFamily: theme.fonts.regular,
-              },
-              ...(Platform.OS === "android"
-                ? {
-                    headerLeft: () => (
-                      <TouchableOpacity
-                        onPress={() => router.back()}
-                        style={{ paddingRight: 10 }}
-                      >
-                        <Ionicons
-                          name="arrow-back"
-                          size={24}
-                          color={theme.colors.text}
-                        />
-                      </TouchableOpacity>
-                    ),
-                  }
-                : {
-                    headerRight: () => (
-                      <TouchableOpacity onPress={() => router.back()}>
-                        <Ionicons
-                          name="chevron-down"
-                          size={24}
-                          color={theme.colors.text}
-                        />
-                      </TouchableOpacity>
-                    ),
-                  }),
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="subscription-detail"
-            options={{
-              presentation: "modal",
-              headerShown: true,
-              headerShadowVisible: false,
-              headerTitle: "",
-              headerStyle: {
-                backgroundColor: theme.colors.background,
-              },
-              ...(Platform.OS === "android"
-                ? {
-                    headerLeft: () => (
-                      <TouchableOpacity
-                        onPress={() => router.back()}
-                        style={{ paddingRight: 10 }}
-                      >
-                        <Ionicons
-                          name="arrow-back"
-                          size={24}
-                          color={theme.colors.text}
-                        />
-                      </TouchableOpacity>
-                    ),
-                  }
-                : {
-                    headerRight: () => (
-                      <TouchableOpacity onPress={() => router.back()}>
-                        <Ionicons
-                          name="chevron-down"
-                          size={24}
-                          color={theme.colors.text}
-                        />
-                      </TouchableOpacity>
-                    ),
-                  }),
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="edit-subscription"
-            options={{
-              presentation: "modal",
-              headerShown: true,
-              headerShadowVisible: false,
-              headerTitle: "Edit Expense",
-              headerStyle: {
-                backgroundColor: theme.colors.background,
-              },
-              headerTintColor: theme.colors.text,
-              headerTitleStyle: {
-                fontWeight: "600",
-                fontFamily: theme.fonts.regular,
-              },
-              ...(Platform.OS === "android"
-                ? {
-                    headerLeft: () => (
-                      <TouchableOpacity
-                        onPress={() => router.back()}
-                        style={{ paddingRight: 10 }}
-                      >
-                        <Ionicons
-                          name="arrow-back"
-                          size={24}
-                          color={theme.colors.text}
-                        />
-                      </TouchableOpacity>
-                    ),
-                  }
-                : {
-                    headerRight: () => (
-                      <TouchableOpacity onPress={() => router.back()}>
-                        <Ionicons
-                          name="chevron-down"
-                          size={24}
-                          color={theme.colors.text}
-                        />
-                      </TouchableOpacity>
-                    ),
-                  }),
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="privacy-policy"
-            options={{
-              headerShown: true,
-              headerTitle: "Privacy Policy",
-              headerStyle: {
-                backgroundColor: theme.colors.background,
-              },
-              headerTintColor: theme.colors.text,
-              headerShadowVisible: false,
-              headerTitleStyle: {
-                fontWeight: "600",
-                fontFamily: theme.fonts.regular,
-              },
-              headerLeft: () => (
-                <TouchableOpacity
-                  onPress={() => router.back()}
-                  style={{ paddingRight: Platform.OS === "ios" ? 0 : 10 }}
-                >
-                  <Ionicons
-                    name="arrow-back"
-                    size={24}
-                    color={theme.colors.text}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="terms-of-service"
-            options={{
-              headerShown: true,
-              headerTitle: "Terms of Service",
-              headerStyle: {
-                backgroundColor: theme.colors.background,
-              },
-              headerTintColor: theme.colors.text,
-              headerShadowVisible: false,
-              headerTitleStyle: {
-                fontWeight: "600",
-                fontFamily: theme.fonts.regular,
-              },
-              headerLeft: () => (
-                <TouchableOpacity
-                  onPress={() => router.back()}
-                  style={{ paddingRight: Platform.OS === "ios" ? 0 : 10 }}
-                >
-                  <Ionicons
-                    name="arrow-back"
-                    size={24}
-                    color={theme.colors.text}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-          />
-          </Stack>
+          {!user.hasOnboarded ? (
+            <OnboardingPage />
+          ) : (
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="onboarding" />
+              <Stack.Screen name="index" />
+              <Stack.Screen
+                name="analytics"
+                options={{
+                  headerShown: true,
+                  headerTitle: "",
+                  headerStyle: {
+                    backgroundColor: theme.colors.background,
+                  },
+                  headerShadowVisible: false,
+                  headerLeft: () => (
+                    <TouchableOpacity onPress={() => router.back()}>
+                      <Ionicons
+                        name="arrow-back"
+                        size={24}
+                        color={theme.colors.text}
+                      />
+                    </TouchableOpacity>
+                  ),
+                }}
+              />
+              <Stack.Screen
+                name="settings"
+                options={{
+                  headerShown: true,
+                  headerTitle: "",
+                  headerStyle: {
+                    backgroundColor: theme.colors.background,
+                  },
+                  headerShadowVisible: false,
+                  headerLeft: () => (
+                    <TouchableOpacity onPress={() => router.back()}>
+                      <Ionicons
+                        name="arrow-back"
+                        size={24}
+                        color={theme.colors.text}
+                      />
+                    </TouchableOpacity>
+                  ),
+                }}
+              />
+              <Stack.Screen
+                name="add-subscription"
+                options={{
+                  presentation: "modal",
+                  headerShown: true,
+                  headerShadowVisible: false,
+                  headerTitle: "Add Expense",
+                  headerStyle: {
+                    backgroundColor: theme.colors.background,
+                  },
+                  headerTintColor: theme.colors.text,
+                  headerTitleStyle: {
+                    fontWeight: "600",
+                    fontFamily: theme.fonts.regular,
+                  },
+                  ...(Platform.OS === "android"
+                    ? {
+                        headerLeft: () => (
+                          <TouchableOpacity
+                            onPress={() => router.back()}
+                            style={{ paddingRight: 10 }}
+                          >
+                            <Ionicons
+                              name="arrow-back"
+                              size={24}
+                              color={theme.colors.text}
+                            />
+                          </TouchableOpacity>
+                        ),
+                      }
+                    : {
+                        headerRight: () => (
+                          <TouchableOpacity onPress={() => router.back()}>
+                            <Ionicons
+                              name="chevron-down"
+                              size={24}
+                              color={theme.colors.text}
+                            />
+                          </TouchableOpacity>
+                        ),
+                      }),
+                  gestureEnabled: true,
+                }}
+              />
+              <Stack.Screen
+                name="subscription-detail"
+                options={{
+                  presentation: "modal",
+                  headerShown: true,
+                  headerShadowVisible: false,
+                  headerTitle: "",
+                  headerStyle: {
+                    backgroundColor: theme.colors.background,
+                  },
+                  ...(Platform.OS === "android"
+                    ? {
+                        headerLeft: () => (
+                          <TouchableOpacity
+                            onPress={() => router.back()}
+                            style={{ paddingRight: 10 }}
+                          >
+                            <Ionicons
+                              name="arrow-back"
+                              size={24}
+                              color={theme.colors.text}
+                            />
+                          </TouchableOpacity>
+                        ),
+                      }
+                    : {
+                        headerRight: () => (
+                          <TouchableOpacity onPress={() => router.back()}>
+                            <Ionicons
+                              name="chevron-down"
+                              size={24}
+                              color={theme.colors.text}
+                            />
+                          </TouchableOpacity>
+                        ),
+                      }),
+                  gestureEnabled: true,
+                }}
+              />
+              <Stack.Screen
+                name="edit-subscription"
+                options={{
+                  presentation: "modal",
+                  headerShown: true,
+                  headerShadowVisible: false,
+                  headerTitle: "Edit Expense",
+                  headerStyle: {
+                    backgroundColor: theme.colors.background,
+                  },
+                  headerTintColor: theme.colors.text,
+                  headerTitleStyle: {
+                    fontWeight: "600",
+                    fontFamily: theme.fonts.regular,
+                  },
+                  ...(Platform.OS === "android"
+                    ? {
+                        headerLeft: () => (
+                          <TouchableOpacity
+                            onPress={() => router.back()}
+                            style={{ paddingRight: 10 }}
+                          >
+                            <Ionicons
+                              name="arrow-back"
+                              size={24}
+                              color={theme.colors.text}
+                            />
+                          </TouchableOpacity>
+                        ),
+                      }
+                    : {
+                        headerRight: () => (
+                          <TouchableOpacity onPress={() => router.back()}>
+                            <Ionicons
+                              name="chevron-down"
+                              size={24}
+                              color={theme.colors.text}
+                            />
+                          </TouchableOpacity>
+                        ),
+                      }),
+                  gestureEnabled: true,
+                }}
+              />
+              <Stack.Screen
+                name="privacy-policy"
+                options={{
+                  headerShown: true,
+                  headerTitle: "Privacy Policy",
+                  headerStyle: {
+                    backgroundColor: theme.colors.background,
+                  },
+                  headerTintColor: theme.colors.text,
+                  headerShadowVisible: false,
+                  headerTitleStyle: {
+                    fontWeight: "600",
+                    fontFamily: theme.fonts.regular,
+                  },
+                  headerLeft: () => (
+                    <TouchableOpacity
+                      onPress={() => router.back()}
+                      style={{ paddingRight: Platform.OS === "ios" ? 0 : 10 }}
+                    >
+                      <Ionicons
+                        name="arrow-back"
+                        size={24}
+                        color={theme.colors.text}
+                      />
+                    </TouchableOpacity>
+                  ),
+                }}
+              />
+              <Stack.Screen
+                name="terms-of-service"
+                options={{
+                  headerShown: true,
+                  headerTitle: "Terms of Service",
+                  headerStyle: {
+                    backgroundColor: theme.colors.background,
+                  },
+                  headerTintColor: theme.colors.text,
+                  headerShadowVisible: false,
+                  headerTitleStyle: {
+                    fontWeight: "600",
+                    fontFamily: theme.fonts.regular,
+                  },
+                  headerLeft: () => (
+                    <TouchableOpacity
+                      onPress={() => router.back()}
+                      style={{ paddingRight: Platform.OS === "ios" ? 0 : 10 }}
+                    >
+                      <Ionicons
+                        name="arrow-back"
+                        size={24}
+                        color={theme.colors.text}
+                      />
+                    </TouchableOpacity>
+                  ),
+                }}
+              />
+            </Stack>
+          )}
           <ConfirmationDialog />
         </SafeAreaProvider>
       </GestureHandlerRootView>

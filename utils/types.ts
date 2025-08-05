@@ -15,6 +15,7 @@ export type UserData = {
   defaultCurrency: Currency;
   notifications: boolean;
   reminderDays: number;
+  hasOnboarded: boolean;
 };
 
 export type Currency = "USD" | "EUR" | "GBP" | "CAD" | "AUD" | "EGP";

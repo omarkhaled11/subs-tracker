@@ -62,6 +62,7 @@ export const useSubscriptionsStore = create<SubscriptionsStore>()(
         defaultCurrency: "EUR",
         notifications: false,
         reminderDays: 7,
+        hasOnboarded: false,
       },
 
       // Add new subscription

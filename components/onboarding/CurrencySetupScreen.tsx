@@ -5,18 +5,23 @@ import { StepIndicator } from "./StepIndicator";
 import { theme } from "../../utils/theme";
 import { currencies, currencySymbols } from "../../utils/constants";
 import { Currency } from "../../utils/types";
+import { useSubscriptionsStore } from "../../utils/store";
 
 interface CurrencySetupScreenProps {
-  onContinue: (currency: Currency) => void;
+  onContinue: () => void;
 }
 
 export const CurrencySetupScreen: React.FC<CurrencySetupScreenProps> = ({ 
   onContinue 
 }) => {
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency>("USD");
+  const { updateUser, getUser } = useSubscriptionsStore();
+  const currentUser = getUser();
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(currentUser.defaultCurrency);
 
   const handleContinue = () => {
-    onContinue(selectedCurrency);
+    // Update the store with the selected currency
+    updateUser({ defaultCurrency: selectedCurrency });
+    onContinue();
   };
 
   const renderCurrencyItem = ({ item }: { item: Currency }) => (
