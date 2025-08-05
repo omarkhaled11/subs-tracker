@@ -1,5 +1,11 @@
-import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useRef, useEffect, useMemo } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import Octicons from "@expo/vector-icons/Octicons";
 import { SubscriptionItem } from "../utils/types";
@@ -48,6 +54,7 @@ export function SubList({
   const swipeableRefs = useRef<{ [key: string]: Swipeable | null }>({});
   const currentlyOpenSwipeable = useRef<string | null>(null);
   const { showConfirmDialog } = useConfirmationDialogStore();
+  const animatedValues = useRef<{ [key: string]: Animated.Value }>({});
 
   const closeCurrentSwipeable = () => {
     if (currentlyOpenSwipeable.current) {
@@ -79,9 +86,38 @@ export function SubList({
     );
   };
 
-  const sortedSubscriptions = sortBy
-    ? sortSubscriptions(subscriptions, sortBy)
-    : subscriptions;
+  const sortedSubscriptions = useMemo(() => {
+    return sortBy ? sortSubscriptions(subscriptions, sortBy) : subscriptions;
+  }, [subscriptions, sortBy]);
+
+  // Animate items when list changes
+  useEffect(() => {
+    // Reset all animations to 0 first
+    sortedSubscriptions.forEach((item) => {
+      if (!animatedValues.current[item.id]) {
+        animatedValues.current[item.id] = new Animated.Value(0);
+      } else {
+        animatedValues.current[item.id].setValue(0);
+      }
+    });
+
+    // Then animate them in with staggered delays
+    sortedSubscriptions.forEach((item, index) => {
+      Animated.timing(animatedValues.current[item.id], {
+        toValue: 1,
+        duration: 300,
+        delay: index * 60,
+        useNativeDriver: true,
+      }).start();
+    });
+
+    // Clean up removed items
+    Object.keys(animatedValues.current).forEach((id) => {
+      if (!sortedSubscriptions.find((item) => item.id === id)) {
+        delete animatedValues.current[id];
+      }
+    });
+  }, [sortedSubscriptions]);
 
   // Show empty state if no subscriptions
   if (subscriptions.length === 0) {
@@ -110,7 +146,7 @@ export function SubList({
         <TouchableOpacity
           style={styles.sortButton}
           onPress={() => {
-            closeCurrentSwipeable();
+            // closeCurrentSwipeable();
             setSortPickerVisible(true);
           }}
           activeOpacity={0.8}
@@ -121,59 +157,80 @@ export function SubList({
       </View>
 
       <View style={styles.listContainer}>
-        {sortedSubscriptions.map((item) => (
-          <View key={item.id} style={styles.swipeContainer}>
-            <Swipeable
-              ref={(ref) => {
-                if (ref) {
-                  swipeableRefs.current[item.id] = ref;
-                }
-              }}
-              renderRightActions={() => renderRightActions(item)}
-              rightThreshold={40}
-              friction={2}
-              onSwipeableWillOpen={() => {
-                // Close previously opened swipeable
-                if (
-                  currentlyOpenSwipeable.current &&
-                  currentlyOpenSwipeable.current !== item.id
-                ) {
-                  swipeableRefs.current[
-                    currentlyOpenSwipeable.current
-                  ]?.close();
-                }
-                currentlyOpenSwipeable.current = item.id;
-              }}
+        {sortedSubscriptions.map((item) => {
+          const animatedValue =
+            animatedValues.current[item.id] || new Animated.Value(1);
+
+          return (
+            <Animated.View
+              key={item.id}
+              style={[
+                styles.swipeContainer,
+                {
+                  opacity: animatedValue,
+                  transform: [
+                    {
+                      translateY: animatedValue.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [-50, 0],
+                      }),
+                    },
+                  ],
+                },
+              ]}
             >
-              <TouchableOpacity
-                style={styles.listItem}
-                onPress={() => {
-                  closeCurrentSwipeable();
-                  onItemPress?.(item);
+              <Swipeable
+                ref={(ref) => {
+                  if (ref) {
+                    swipeableRefs.current[item.id] = ref;
+                  }
                 }}
-                activeOpacity={1}
+                renderRightActions={() => renderRightActions(item)}
+                rightThreshold={40}
+                friction={2}
+                onSwipeableWillOpen={() => {
+                  // Close previously opened swipeable
+                  if (
+                    currentlyOpenSwipeable.current &&
+                    currentlyOpenSwipeable.current !== item.id
+                  ) {
+                    swipeableRefs.current[
+                      currentlyOpenSwipeable.current
+                    ]?.close();
+                  }
+                  currentlyOpenSwipeable.current = item.id;
+                }}
               >
-                <View style={styles.leftSection}>
-                  <View style={styles.iconContainer}>
-                    <Text style={styles.icon}>
+                <TouchableOpacity
+                  style={styles.listItem}
+                  onPress={() => {
+                    closeCurrentSwipeable();
+                    onItemPress?.(item);
+                  }}
+                  activeOpacity={1}
+                >
+                  <View style={styles.leftSection}>
+                    <View style={styles.iconContainer}>
+                      <Text style={styles.icon}>
+                        {currencySymbols[item.currency]}
+                      </Text>
+                    </View>
+                    <Text style={styles.label}>{item.label}</Text>
+                  </View>
+                  <View style={styles.amountSection}>
+                    <Text style={styles.amount}>
                       {currencySymbols[item.currency]}
+                      {item.amount.toFixed(2)}
+                    </Text>
+                    <Text style={styles.interval}>
+                      {intervalLabels[item.interval]}
                     </Text>
                   </View>
-                  <Text style={styles.label}>{item.label}</Text>
-                </View>
-                <View style={styles.amountSection}>
-                  <Text style={styles.amount}>
-                    {currencySymbols[item.currency]}
-                    {item.amount.toFixed(2)}
-                  </Text>
-                  <Text style={styles.interval}>
-                    {intervalLabels[item.interval]}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </Swipeable>
-          </View>
-        ))}
+                </TouchableOpacity>
+              </Swipeable>
+            </Animated.View>
+          );
+        })}
       </View>
 
       <SortPicker
@@ -214,8 +271,7 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     fontFamily: theme.fonts.regular,
   },
-  listContainer: {
-  },
+  listContainer: {},
   emptyState: {
     flex: 1,
     justifyContent: "center",
