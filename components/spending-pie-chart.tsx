@@ -132,14 +132,8 @@ const styles = StyleSheet.create({
     margin: 16,
     marginTop: 0,
     padding: 16,
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    ...theme.shadows.subtle,
+    ...theme.borders.premium
   },
   title: {
     fontSize: 18,

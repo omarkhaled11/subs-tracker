@@ -85,14 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 100,
     justifyContent: "center",
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    ...theme.borders.premium
   },
   primaryCard: {
     backgroundColor: theme.colors.primary,
@@ -102,7 +95,7 @@ const styles = StyleSheet.create({
   },
   analyticsLabel: {
     fontSize: 12,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     fontWeight: "500",
     marginBottom: 4,
     textTransform: "uppercase",
@@ -118,7 +111,7 @@ const styles = StyleSheet.create({
   },
   analyticsSubtext: {
     fontSize: 11,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     fontWeight: "400",
     fontFamily: theme.fonts.regular,
   },

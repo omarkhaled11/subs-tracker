@@ -181,18 +181,11 @@ export const SpendingTrendChart: React.FC<SpendingTrendChartProps> = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.card,
+    ...theme.borders.premium,
     borderRadius: theme.borderRadius.small,
     margin: 16,
     marginTop: 0,
     padding: 16,
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
   },
   title: {
     fontSize: 18,
@@ -215,7 +208,7 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 12,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     fontWeight: "500",
     marginBottom: 4,
     textTransform: "uppercase",
@@ -255,7 +248,7 @@ const styles = StyleSheet.create({
   },
   insightText: {
     fontSize: 12,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     marginBottom: 4,
     lineHeight: 16,
   },

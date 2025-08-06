@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.card,
     borderRadius: theme.borderRadius.small,
     padding: 16,
+    ...theme.borders.premium
   },
   monthHeader: {
     flexDirection: "row",
