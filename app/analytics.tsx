@@ -1,5 +1,13 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { theme } from "../utils/theme";
 import { AnalyticsSummaryCards } from "../components/analytics-card";
 import { SpendingPieChart } from "../components/spending-pie-chart";
@@ -27,7 +35,7 @@ export default function AnalyticsScreen() {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['#1A0826', 'black']}
+        colors={["#1A0826", "black"]}
         // colors={['blue', 'red']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 1 }}
@@ -83,6 +91,13 @@ export default function AnalyticsScreen() {
 
           <View style={styles.bottomPadding} />
         </ScrollView>
+        <TouchableOpacity
+          style={styles.headerBackIcon}
+          onPress={() => router.back()}
+          activeOpacity={0.9}
+        >
+          <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
+        </TouchableOpacity>
       </LinearGradient>
     </View>
   );
@@ -101,17 +116,31 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    paddingTop: 100,
+    paddingTop: 80,
   },
   header: {
-    padding: 24,
     paddingTop: 16,
     paddingBottom: 32,
   },
+  headerBackIcon: {
+    position: "absolute",
+    left: 20,
+    top: 56,
+    backgroundColor: theme.colors.background,
+    height: 42,
+    width: 42,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 21,
+    ...theme.shadows.subtle,
+    borderWidth: 1,
+    borderColor: theme.colors.border
+  },
   headerContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    padding: 24,
   },
   title: {
     fontSize: 34,
@@ -128,13 +157,13 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   premiumBadge: {
-    backgroundColor: 'rgba(255, 215, 0, 0.2)',
+    backgroundColor: "rgba(255, 215, 0, 0.2)",
     borderWidth: 1,
-    borderColor: '#FFD700',
+    borderColor: "#FFD700",
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
-    shadowColor: '#FFD700',
+    shadowColor: "#FFD700",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -144,9 +173,9 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   premiumText: {
-    color: '#FFD700',
+    color: "#FFD700",
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: "700",
     fontFamily: theme.fonts.medium,
     letterSpacing: 1,
   },

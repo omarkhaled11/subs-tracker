@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   gridLabel: {
     fontSize: 12,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     fontWeight: '600',
     marginBottom: 8,
     textTransform: 'uppercase',
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   gridSubtext: {
     fontSize: 12,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     fontWeight: '400',
     fontFamily: theme.fonts.regular,
     opacity: 0.8,
