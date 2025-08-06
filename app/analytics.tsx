@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    // paddingTop: 60,
+    paddingTop: 100,
   },
   header: {
     padding: 24,

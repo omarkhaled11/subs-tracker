@@ -56,7 +56,7 @@ export default function RootLayout() {
               <Stack.Screen
                 name="analytics"
                 options={{
-                  headerShown: true,
+                  headerShown: false,
                   headerTitle: "",
                   headerStyle: {
                     backgroundColor: theme.colors.background,
