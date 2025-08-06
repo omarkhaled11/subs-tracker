@@ -36,7 +36,6 @@ export default function AnalyticsScreen() {
     <View style={styles.container}>
       <LinearGradient
         colors={["#1A0826", "black"]}
-        // colors={['blue', 'red']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={styles.gradient}
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingTop: 16,
-    paddingBottom: 32,
+    paddingBottom: 24,
   },
   headerBackIcon: {
     position: "absolute",
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 21,
     ...theme.shadows.subtle,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: theme.colors.border
   },
   headerContent: {
@@ -180,7 +179,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   section: {
-    marginBottom: 32,
+    marginBottom: 24,
     paddingHorizontal: 4,
     ...theme.shadows.subtle,
   },
