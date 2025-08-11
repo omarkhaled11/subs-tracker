@@ -162,7 +162,8 @@ const styles = StyleSheet.create({
   },
   // New hero card design
   heroCard: {
-    paddingVertical: 32,
+    paddingTop: 56,
+    paddingBottom: 24,
     paddingHorizontal: 24,
     alignItems: 'center',
   },
@@ -198,7 +199,6 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.regular,
     textAlign: 'center',
     opacity: 0.9,
-    marginTop: 4,
   },
   // Redesigned upcoming renewals card
   renewalCard: {

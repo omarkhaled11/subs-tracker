@@ -11,6 +11,7 @@ import { SubscriptionItem } from "../utils/types";
 import { theme } from "../utils/theme";
 import { currencySymbols } from "../utils/constants";
 import { ActionButtons } from "../components/action-buttons";
+import { ProButton } from "../components/pro-button";
 
 export default function HomeScreen() {
   const {
@@ -30,6 +31,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <ProButton />
       <ScrollView
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
@@ -39,7 +41,7 @@ export default function HomeScreen() {
           amount={totalAmount}
           currency={currencySymbols[user.defaultCurrency]}
         />
-        <UpcomingRenewalCard upcomingSubscriptions={upcomingRenewals} />
+        {/* <UpcomingRenewalCard upcomingSubscriptions={upcomingRenewals} /> */}
         <ActionButtons />
         <SubList
           subscriptions={subscriptions}
