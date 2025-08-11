@@ -17,13 +17,11 @@ export default function HomeScreen() {
   const {
     subscriptions,
     getTotalMonthlyAmount,
-    getUpcomingRenewals,
     deleteSubscription,
     getUser,
   } = useSubscriptionsStore();
   const user = getUser();
   const totalAmount = getTotalMonthlyAmount();
-  const upcomingRenewals = getUpcomingRenewals(30); // Get renewals in the next 30 days
 
   const handleItemPress = (item: SubscriptionItem) => {
     router.push(`/subscription-detail?id=${item.id}`);
@@ -31,17 +29,16 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ProButton />
       <ScrollView
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
+        {/* <ProButton /> */}
         <SubscriptionAmountCard
           amount={totalAmount}
           currency={currencySymbols[user.defaultCurrency]}
         />
-        {/* <UpcomingRenewalCard upcomingSubscriptions={upcomingRenewals} /> */}
         <ActionButtons />
         <SubList
           subscriptions={subscriptions}

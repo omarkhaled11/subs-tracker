@@ -64,13 +64,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
     color: theme.colors.text,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   settingSubtitle: {
     fontSize: 13,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     marginTop: 2,
     fontFamily: theme.fonts.regular,
+    opacity: 0.9,
   },
   textContainer: {
     maxWidth: Dimensions.get("window").width * 0.6,

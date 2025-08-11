@@ -33,9 +33,11 @@ export const ProButton = () => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    position: "absolute",
-    top: 65,
-    right: 20,
+    // position: "absolute",
+    // top: 65,
+    marginHorizontal: 'auto',
+    alignSelf: "center",
+    maxWidth: 200,
     zIndex: 10,
     borderRadius: 20,
     overflow: "hidden",

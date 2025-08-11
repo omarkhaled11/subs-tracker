@@ -397,15 +397,17 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
+    fontSize: 34,
+    fontWeight: "800",
     marginBottom: 8,
     color: theme.colors.text,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.bold,
+    letterSpacing: -0.5,
   },
   subtitle: {
-    fontSize: 16,
-    color: theme.colors.secondary,
+    fontSize: 17,
+    color: theme.colors.secondaryText,
     fontFamily: theme.fonts.regular,
+    opacity: 0.9,
   },
 });

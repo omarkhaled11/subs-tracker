@@ -12,9 +12,9 @@ import { theme } from "../utils/theme";
 import { AnalyticsSummaryCards } from "../components/analytics-card";
 import { SpendingPieChart } from "../components/spending-pie-chart";
 import { SpendingTrendChart } from "../components/spending-trend-chart";
-import { RenewalTimeline } from "../components/renewal-timeline";
 import { useSubscriptionsStore } from "../utils/store";
 import { currencySymbols } from "../utils/constants";
+import { UnifiedRenewals } from "../components/unified-renewals";
 
 export default function AnalyticsScreen() {
   const {
@@ -23,8 +23,11 @@ export default function AnalyticsScreen() {
     getTotalYearlyAmount,
     getMostExpensiveSubscription,
     getAverageMonthlyAmount,
+    getUpcomingRenewals,
     getUser,
   } = useSubscriptionsStore();
+
+  const upcomingRenewals = getUpcomingRenewals(30); // Get renewals in the next 30 days
 
   const user = getUser();
   const monthlyTotal = getTotalMonthlyAmount();
@@ -68,8 +71,9 @@ export default function AnalyticsScreen() {
           </View>
 
           <View style={styles.section}>
-            <RenewalTimeline
-              subscriptions={subscriptions}
+            <UnifiedRenewals
+              upcomingSubscriptions={upcomingRenewals}
+              allSubscriptions={subscriptions}
               currency={currencySymbols[user.defaultCurrency]}
             />
           </View>
@@ -146,14 +150,14 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     marginBottom: 8,
     color: theme.colors.text,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.bold,
     letterSpacing: -0.5,
   },
   subtitle: {
     fontSize: 17,
     color: theme.colors.secondaryText,
     fontFamily: theme.fonts.regular,
-    opacity: 0.8,
+    opacity: 0.9,
   },
   premiumBadge: {
     backgroundColor: "rgba(255, 215, 0, 0.2)",

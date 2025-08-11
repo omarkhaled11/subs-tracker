@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 13,
     fontWeight: "600",
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     textTransform: "uppercase",
     letterSpacing: 0.5,
     paddingHorizontal: 16,

@@ -85,7 +85,9 @@ export const AnalyticsSummaryCards: React.FC<AnalyticsSummaryCardsProps> = ({
 
 const styles = StyleSheet.create({
   analyticsContainer: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
     gap: 20,
   },
   featuredCard: {

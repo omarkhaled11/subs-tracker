@@ -158,7 +158,7 @@ export const SpendingPieChart: React.FC<SpendingPieChartProps> = ({
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginVertical: 12,
+    marginBottom: 12,
   },
   titleSection: {
     marginBottom: 20,
@@ -179,9 +179,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: "800",
+    fontWeight: "700",
     color: theme.colors.text,
-    fontFamily: theme.fonts.bold,
+    fontFamily: theme.fonts.medium,
     letterSpacing: -0.5,
   },
   subtitle: {
