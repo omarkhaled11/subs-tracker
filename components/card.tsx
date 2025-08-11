@@ -19,12 +19,17 @@ export const SubscriptionAmountCard: React.FC<SubscriptionAmountCardProps> = ({
   };
 
   return (
-    <View style={styles.card}>
-      <Text style={styles.label}>What you owe this month</Text>
-      <Text style={styles.amount}>
-        {currency}
-        {formatAmount(amount)}
-      </Text>
+    <View style={styles.heroCard}>
+      <View style={styles.heroContent}>
+        <View style={styles.labelContainer}>
+          <Ionicons name="wallet-outline" size={18} color={theme.colors.secondaryText} />
+          <Text style={styles.heroLabel}>Monthly Total</Text>
+        </View>
+        <Text style={styles.heroAmount}>
+          {currency}{formatAmount(amount)}
+        </Text>
+        <Text style={styles.heroSubtext}>Total subscription costs this month</Text>
+      </View>
     </View>
   );
 };
@@ -129,12 +134,13 @@ export const UpcomingRenewalCard: React.FC<UpcomingRenewalCardProps> = ({
 };
 
 const styles = StyleSheet.create({
+  // Legacy card styles (keeping for compatibility)
   card: {
     borderRadius: theme.borderRadius.small,
     padding: 16,
     marginVertical: 8,
     marginTop: Platform.OS === "android" ? 16 : 8,
-    height: 160, // Takes about 1/3 of screen height
+    height: 160,
     alignSelf: "stretch",
     justifyContent: "center",
     alignItems: "flex-start",
@@ -153,6 +159,46 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.regular,
     color: theme.colors.text,
     textAlign: "center",
+  },
+  // New hero card design
+  heroCard: {
+    paddingVertical: 32,
+    paddingHorizontal: 24,
+    alignItems: 'center',
+  },
+  heroContent: {
+    alignItems: 'center',
+    gap: 12,
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  heroLabel: {
+    fontSize: 16,
+    color: theme.colors.secondaryText,
+    fontWeight: '500',
+    fontFamily: theme.fonts.medium,
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+  },
+  heroAmount: {
+    fontSize: 56,
+    fontWeight: '900',
+    color: theme.colors.text,
+    fontFamily: theme.fonts.bold,
+    textAlign: 'center',
+    letterSpacing: -2,
+    lineHeight: 64,
+  },
+  heroSubtext: {
+    fontSize: 14,
+    color: theme.colors.secondaryText,
+    fontFamily: theme.fonts.regular,
+    textAlign: 'center',
+    opacity: 0.9,
+    marginTop: 4,
   },
   // Redesigned upcoming renewals card
   renewalCard: {
