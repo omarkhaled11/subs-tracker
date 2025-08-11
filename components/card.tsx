@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Platform } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { SubscriptionItem } from "../utils/types";
 import { theme } from "../utils/theme";
 import { getDaysUntilRenewal } from "../utils/helpers";
@@ -35,13 +36,33 @@ interface UpcomingRenewalCardProps {
 export const UpcomingRenewalCard: React.FC<UpcomingRenewalCardProps> = ({
   upcomingSubscriptions,
 }) => {
+  const getUrgencyColor = (daysUntil: number) => {
+    if (daysUntil === 0) return "#EF4444"; // Red for today
+    if (daysUntil === 1) return "#F59E0B"; // Amber for tomorrow
+    if (daysUntil <= 7) return "#8B5CF6"; // Purple for this week
+    return theme.colors.primary; // Green for later
+  };
+
+  const getUrgencyIcon = (daysUntil: number) => {
+    if (daysUntil === 0) return "alert-circle";
+    if (daysUntil === 1) return "warning";
+    if (daysUntil <= 7) return "time";
+    return "calendar";
+  };
+
   if (upcomingSubscriptions.length === 0) {
     return (
-      <View style={styles.smallCard}>
-        <Text style={styles.smallLabel}>Upcoming Renewals</Text>
-        <Text style={styles.noRenewalsText}>
-          No renewals in the next 30 days
-        </Text>
+      <View style={styles.renewalCard}>
+        <View style={styles.cardHeader}>
+          <View style={styles.headerLeft}>
+            <Ionicons name="calendar-outline" size={20} color={theme.colors.primary} />
+            <Text style={styles.cardTitle}>Upcoming Renewals</Text>
+          </View>
+        </View>
+        <View style={styles.emptyState}>
+          <Ionicons name="checkmark-circle" size={32} color={theme.colors.primary} />
+          <Text style={styles.emptyStateText}>All clear for the next 30 days!</Text>
+        </View>
       </View>
     );
   }
@@ -51,33 +72,57 @@ export const UpcomingRenewalCard: React.FC<UpcomingRenewalCardProps> = ({
   const remainingCount = upcomingSubscriptions.length - renewalsToShow.length;
 
   return (
-    <View style={styles.smallCard}>
-      <Text style={styles.smallLabel}>
-        Upcoming Renewals ({upcomingSubscriptions.length})
-      </Text>
-      {renewalsToShow.map((subscription, index) => {
-        const daysUntil = getDaysUntilRenewal(subscription.nextRenewal);
-        return (
-          <View
-            key={subscription.id}
-            style={[styles.renewalInfo, index > 0 && styles.renewalInfoSpacing]}
-          >
-            <Text style={styles.serviceName}>{subscription.label}</Text>
-            <Text style={styles.renewalDate}>
-              {daysUntil === 0
-                ? "Today"
-                : daysUntil === 1
-                ? "Tomorrow"
-                : `in ${daysUntil} days`}
-            </Text>
-          </View>
-        );
-      })}
+    <View style={styles.renewalCard}>
+      <View style={styles.cardHeader}>
+        <View style={styles.headerLeft}>
+          <Ionicons name="calendar-outline" size={20} color={theme.colors.primary} />
+          <Text style={styles.cardTitle}>Upcoming Renewals</Text>
+        </View>
+        <View style={styles.countBadge}>
+          <Text style={styles.countBadgeText}>{upcomingSubscriptions.length}</Text>
+        </View>
+      </View>
+      
+      <View style={styles.renewalsList}>
+        {renewalsToShow.map((subscription, index) => {
+          const daysUntil = getDaysUntilRenewal(subscription.nextRenewal);
+          const urgencyColor = getUrgencyColor(daysUntil);
+          const urgencyIcon = getUrgencyIcon(daysUntil);
+          
+          return (
+            <View key={subscription.id} style={styles.renewalItem}>
+              <View style={styles.renewalLeft}>
+                <View style={[styles.renewalIconContainer, { backgroundColor: `${urgencyColor}20` }]}>
+                  <Ionicons name={urgencyIcon as any} size={16} color={urgencyColor} />
+                </View>
+                <View style={styles.renewalInfo}>
+                  <Text style={styles.serviceName}>{subscription.label}</Text>
+                  <Text style={styles.renewalAmount}>
+                    {subscription.currency}{subscription.amount.toFixed(2)}
+                  </Text>
+                </View>
+              </View>
+              <View style={[styles.renewalDateContainer, { borderColor: urgencyColor }]}>
+                <Text style={[styles.renewalDate, { color: urgencyColor }]}>
+                  {daysUntil === 0
+                    ? "Today"
+                    : daysUntil === 1
+                    ? "Tomorrow"
+                    : `${daysUntil}d`}
+                </Text>
+              </View>
+            </View>
+          );
+        })}
+      </View>
+      
       {remainingCount > 0 && (
-        <Text style={styles.additionalRenewals}>
-          +{remainingCount} more renewal{remainingCount > 1 ? "s" : ""} coming
-          up
-        </Text>
+        <View style={styles.moreRenewals}>
+          <Ionicons name="ellipsis-horizontal" size={16} color={theme.colors.secondary} />
+          <Text style={styles.moreRenewalsText}>
+            +{remainingCount} more renewal{remainingCount > 1 ? "s" : ""}
+          </Text>
+        </View>
       )}
     </View>
   );
@@ -109,65 +154,121 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     textAlign: "center",
   },
-  // upcoming renewals
-  smallCard: {
+  // Redesigned upcoming renewals card
+  renewalCard: {
     backgroundColor: theme.colors.card,
-    borderRadius: theme.borderRadius.small,
-    padding: 16,
-    marginHorizontal: 16,
-    marginBottom: 8,
-    alignSelf: "stretch",
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    borderRadius: theme.borderRadius.medium,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    marginHorizontal: 20,
+    marginVertical: 12,
+    ...theme.shadows.subtle,
   },
-  smallLabel: {
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: theme.colors.text,
+    fontFamily: theme.fonts.bold,
+  },
+  countBadge: {
+    backgroundColor: theme.colors.primary,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    minWidth: 24,
+    alignItems: 'center',
+  },
+  countBadgeText: {
     fontSize: 12,
-    color: theme.colors.secondary,
-    fontWeight: "500",
-    marginBottom: 12,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-    fontFamily: theme.fonts.regular,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    fontFamily: theme.fonts.bold,
+  },
+  renewalsList: {
+    gap: 12,
+  },
+  renewalItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: theme.colors.background,
+    borderRadius: theme.borderRadius.small,
+    padding: 12,
+  },
+  renewalLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    gap: 12,
+  },
+  renewalIconContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   renewalInfo: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 4,
+    flex: 1,
   },
   serviceName: {
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: 15,
+    fontWeight: '600',
     color: theme.colors.text,
-    flex: 1,
+    fontFamily: theme.fonts.medium,
+    marginBottom: 2,
+  },
+  renewalAmount: {
+    fontSize: 13,
+    color: theme.colors.secondary,
     fontFamily: theme.fonts.regular,
+  },
+  renewalDateContainer: {
+    borderWidth: 1,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    minWidth: 50,
+    alignItems: 'center',
   },
   renewalDate: {
-    fontSize: 14,
-    color: theme.colors.primary,
-    fontWeight: "500",
-    fontFamily: theme.fonts.regular,
-  },
-  additionalRenewals: {
     fontSize: 12,
+    fontWeight: '700',
+    fontFamily: theme.fonts.bold,
+    textAlign: 'center',
+  },
+  moreRenewals: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 12,
+    gap: 6,
+  },
+  moreRenewalsText: {
+    fontSize: 13,
     color: theme.colors.secondary,
-    marginTop: 4,
     fontFamily: theme.fonts.regular,
   },
-  noRenewalsText: {
-    fontSize: 14,
+  emptyState: {
+    alignItems: 'center',
+    paddingVertical: 24,
+    gap: 8,
+  },
+  emptyStateText: {
+    fontSize: 15,
     color: theme.colors.text,
-    textAlign: "center",
-    fontStyle: "italic",
-    fontFamily: theme.fonts.regular,
-  },
-  renewalInfoSpacing: {
-    marginTop: 8,
+    fontFamily: theme.fonts.medium,
+    textAlign: 'center',
   },
 });
