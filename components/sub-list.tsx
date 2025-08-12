@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: theme.colors.text,
-    fontFamily: theme.fonts.medium,
+    fontFamily: theme.fonts.bold,
   },
   sortButton: {
     flexDirection: "row",
@@ -269,7 +269,8 @@ const styles = StyleSheet.create({
     marginRight: 8,
     fontSize: 14,
     color: theme.colors.text,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
+    fontWeight: "500",
   },
   listContainer: {},
   emptyState: {
@@ -287,14 +288,14 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: theme.colors.text,
     marginBottom: 8,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.bold,
   },
   emptyDescription: {
     fontSize: 14,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     textAlign: "center",
     lineHeight: 20,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   listItem: {
     flexDirection: "row",
@@ -322,13 +323,14 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: theme.colors.secondary,
+    backgroundColor: theme.colors.primary,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 12,
   },
   icon: {
     fontSize: 20,
+    color: "#1A1A1A",
     fontFamily: theme.fonts.regular,
   },
   label: {
@@ -336,7 +338,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: theme.colors.text,
     flex: 1,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   amountSection: {
     alignItems: "flex-end",
@@ -345,12 +347,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: theme.colors.primary,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.bold,
   },
   interval: {
     fontSize: 12,
     color: theme.colors.secondaryText,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
     marginTop: 2,
   },
   deleteAction: {

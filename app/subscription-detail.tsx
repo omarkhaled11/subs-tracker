@@ -286,13 +286,14 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: theme.colors.secondary,
+    backgroundColor: theme.colors.primary,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 16,
   },
   icon: {
     fontSize: 32,
+    color: "#1A1A1A",
   },
   serviceName: {
     fontSize: 24,
@@ -300,14 +301,14 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     textAlign: "center",
     marginBottom: 8,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.bold,
   },
   amount: {
     fontSize: 32,
     fontWeight: "700",
     color: theme.colors.primary,
     textAlign: "center",
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.bold,
   },
   detailsSection: {
     backgroundColor: theme.colors.card,
@@ -315,6 +316,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     marginBottom: 24,
+    ...theme.shadows.subtle,
   },
   detailRow: {
     flexDirection: "row",
@@ -328,7 +330,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.colors.secondaryText,
     fontWeight: "500",
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   detailValue: {
     fontSize: 16,
@@ -336,25 +338,26 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     flex: 1,
     textAlign: "right",
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   urgentText: {
-    color: theme.colors.primary,
+    color: "#F59E0B",
   },
   todayText: {
-    color: theme.colors.primary,
+    color: "#EF4444",
   },
   breakdownSection: {
     backgroundColor: theme.colors.card,
     borderRadius: theme.borderRadius.small,
     padding: 16,
+    ...theme.shadows.subtle,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "600",
     color: theme.colors.text,
     marginBottom: 16,
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.bold,
   },
   breakdownRow: {
     flexDirection: "row",
@@ -366,13 +369,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.colors.secondaryText,
     fontWeight: "500",
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   breakdownValue: {
     fontSize: 16,
     color: theme.colors.text,
     fontWeight: "600",
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   errorContainer: {
     flex: 1,
@@ -382,10 +385,10 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 18,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     marginBottom: 20,
     textAlign: "center",
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   backButton: {
     backgroundColor: theme.colors.primary,
@@ -394,10 +397,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   backButtonText: {
-    color: theme.colors.text,
+    color: "#1A1A1A",
     fontSize: 16,
     fontWeight: "600",
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.medium,
   },
   lastDetailRow: {
     borderBottomWidth: 0,
