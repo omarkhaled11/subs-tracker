@@ -281,43 +281,6 @@ export default function SettingsScreen() {
           />
         </SettingsSection>
 
-        <SettingsSection title="Privacy & Security">
-          {/* <SettingsRow
-            icon="key"
-            title="Biometric Lock"
-            subtitle="Require Face ID/Touch ID to open app"
-            rightComponent={
-              <Switch
-                value={biometricLock}
-                onValueChange={setBiometricLock}
-                trackColor={{
-                  false: theme.colors.secondary,
-                  true: theme.colors.background,
-                }}
-                thumbColor={
-                  biometricLock ? theme.colors.primary : theme.colors.secondary
-                }
-              />
-            }
-          /> */}
-          <SettingsRow
-            icon="shield-check"
-            title="Privacy Policy"
-            onPress={() => router.push("/privacy-policy")}
-            rightComponent={
-              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
-            }
-          />
-          <SettingsRow
-            icon="file"
-            title="Terms of Service"
-            onPress={() => router.push("/terms-of-service")}
-            rightComponent={
-              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
-            }
-          />
-        </SettingsSection>
-
         <SettingsSection title="Support & Feedback">
           <SettingsRow
             icon="comment-discussion"
@@ -365,6 +328,44 @@ export default function SettingsScreen() {
             onPress={handleClearData}
             rightComponent={
               <Octicons name="chevron-right" size={20} color="#FF3B30" />
+            }
+          />
+        </SettingsSection>
+
+
+        <SettingsSection title="Privacy & Security">
+          {/* <SettingsRow
+            icon="key"
+            title="Biometric Lock"
+            subtitle="Require Face ID/Touch ID to open app"
+            rightComponent={
+              <Switch
+                value={biometricLock}
+                onValueChange={setBiometricLock}
+                trackColor={{
+                  false: theme.colors.secondary,
+                  true: theme.colors.background,
+                }}
+                thumbColor={
+                  biometricLock ? theme.colors.primary : theme.colors.secondary
+                }
+              />
+            }
+          /> */}
+          <SettingsRow
+            icon="shield-check"
+            title="Privacy Policy"
+            onPress={() => router.push("/privacy-policy")}
+            rightComponent={
+              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
+            }
+          />
+          <SettingsRow
+            icon="file"
+            title="Terms of Service"
+            onPress={() => router.push("/terms-of-service")}
+            rightComponent={
+              <Octicons name="chevron-right" size={20} color="#C7C7CC" />
             }
           />
         </SettingsSection>

@@ -1,0 +1,66 @@
+{
+    "subscriptions": [
+      {
+        "label": "Internet",
+        "amount": 45,
+        "interval": "quarterly",
+        "currency": "EUR",
+        "nextRenewal": "2025-08-27T18:54:31.000Z",
+        "reminderDays": 1,
+        "notificationId": "583142ce-1a35-4e52-ba37-aecd010eae8b",
+        "id": "f182d58f-218b-48c4-8cde-e43ca7ec21ee"
+      },
+      {
+        "label": "Mobile ",
+        "amount": 24,
+        "interval": "monthly",
+        "currency": "EUR",
+        "nextRenewal": "2026-04-05T18:50:18.000Z",
+        "reminderDays": 1,
+        "notificationId": "86c7474f-f1fc-449e-975b-87529ca81907",
+        "id": "c648d919-96ff-4b7e-a3a5-f151d104f593"
+      },
+      {
+        "label": "Insurance",
+        "amount": 45,
+        "interval": "yearly",
+        "currency": "EUR",
+        "nextRenewal": "2025-07-29T22:57:05.000Z",
+        "reminderDays": 3,
+        "id": "ea839c50-83df-4f7b-99bf-e24ab67e0c1f",
+        "notificationId": "1da6d348-0337-462d-901b-a01442102d39"
+      },
+      {
+        "label": "Electricity bill",
+        "amount": 70,
+        "interval": "monthly",
+        "currency": "EUR",
+        "nextRenewal": "2025-07-23T22:44:55.851Z",
+        "reminderDays": 3,
+        "id": "44e57b2e-d169-4487-b0fa-db742f6ee900"
+      },
+      {
+        "label": "Transport Card",
+        "amount": 58,
+        "interval": "monthly",
+        "currency": "EUR",
+        "nextRenewal": "2025-07-27T03:10:56.000Z",
+        "reminderDays": 3,
+        "notificationId": "b35f89ab-6b1f-4b2d-971c-da26ee7203c5",
+        "id": "72c47bda-b2fd-4954-ba77-4403a0f3882b"
+      },
+      {
+        "label": "Gym Membership",
+        "amount": 15,
+        "interval": "monthly",
+        "currency": "EUR",
+        "nextRenewal": "2026-09-24T02:58:21.000Z",
+        "reminderDays": 3,
+        "notificationId": "80da634a-097f-4f5a-bd68-9f61d0ac7900",
+        "id": "3516d4a2-0ebb-4971-afed-fe7e7c5308f1"
+      }
+    ],
+    "exportDate": "2025-07-27T19:19:29.250Z",
+    "version": "1.0.0"
+  }
+  
