@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 16,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     fontWeight: "500",
     fontFamily: theme.fonts.regular,
   },
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
   },
   breakdownLabel: {
     fontSize: 16,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     fontWeight: "500",
     fontFamily: theme.fonts.regular,
   },

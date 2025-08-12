@@ -36,7 +36,7 @@ export const ConfirmationDialog: React.FC = () => {
           </Text>
 
           {subtitle && (
-            <Text style={[styles.subtitle, { color: theme.colors.secondary }]}>
+            <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
               {subtitle}
             </Text>
           )}
@@ -53,7 +53,7 @@ export const ConfirmationDialog: React.FC = () => {
                 { borderRightColor: theme.colors.border },
               ]}
             >
-              <Text style={[styles.cancelText, { color: theme.colors.text }]}>
+              <Text style={[styles.cancelText, { color: theme.colors.secondaryText }]}>
                 {cancelText}
               </Text>
             </TouchableOpacity>
@@ -97,22 +97,24 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   title: {
-    fontSize: 17,
-    fontWeight: "600",
+    fontSize: 20,
+    fontWeight: "700",
     textAlign: "center",
-    marginTop: 20,
-    marginBottom: 8,
+    marginTop: 22,
+    marginBottom: 6,
     paddingHorizontal: 16,
-    fontFamily: theme.fonts.medium,
-    lineHeight: 22,
+    fontFamily: theme.fonts.bold,
+    lineHeight: 24,
+    letterSpacing: -0.3,
   },
   subtitle: {
-    fontSize: 13,
+    fontSize: 14,
     textAlign: "center",
     marginBottom: 20,
     paddingHorizontal: 16,
     fontFamily: theme.fonts.regular,
-    lineHeight: 18,
+    lineHeight: 20,
+    opacity: 0.9,
   },
   buttonRow: {
     flexDirection: "row",
@@ -130,14 +132,16 @@ const styles = StyleSheet.create({
   },
   confirmButton: {},
   cancelText: {
-    fontSize: 17,
+    fontSize: 16,
     textAlign: "center",
     fontFamily: theme.fonts.regular,
+    fontWeight: "500",
   },
   confirmText: {
-    fontSize: 17,
-    fontWeight: "600",
+    fontSize: 16,
+    fontWeight: "700",
     textAlign: "center",
-    fontFamily: theme.fonts.medium,
+    fontFamily: theme.fonts.bold,
+    letterSpacing: 0.2,
   },
 });

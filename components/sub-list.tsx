@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
   },
   interval: {
     fontSize: 12,
-    color: theme.colors.secondary,
+    color: theme.colors.secondaryText,
     fontFamily: theme.fonts.regular,
     marginTop: 2,
   },

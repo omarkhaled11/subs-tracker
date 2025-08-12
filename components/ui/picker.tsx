@@ -51,7 +51,7 @@ export const PickerList: React.FC<PickerListProps> = ({
           </Text>
 
           {subtitle && (
-            <Text style={[styles.subtitle, { color: theme.colors.text }]}>
+            <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
               {subtitle}
             </Text>
           )}
@@ -84,7 +84,7 @@ export const PickerList: React.FC<PickerListProps> = ({
             ]}
           >
             <Text
-              style={[styles.cancelText, { color: theme.colors.text }]}
+              style={[styles.cancelText, { color: theme.colors.error }]}
             >
               Cancel
             </Text>
@@ -109,19 +109,23 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
+    fontWeight: "800",
     textAlign: "center",
     marginTop: 24,
-    marginBottom: 8,
+    marginBottom: 6,
     paddingHorizontal: 16,
     fontFamily: theme.fonts.bold,
+    letterSpacing: -0.5,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 15,
     textAlign: "center",
     marginBottom: 24,
     paddingHorizontal: 16,
     fontFamily: theme.fonts.regular,
+    opacity: 0.8,
+    lineHeight: 20,
   },
   optionsContainer: {
     borderWidth: 1,
@@ -142,12 +146,15 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.medium,
   },
   cancelButton: {
-    paddingVertical: 20,
+    paddingVertical: 18,
     borderTopWidth: 1,
+    backgroundColor: 'rgba(255, 59, 48, 0.05)',
   },
   cancelText: {
-    fontSize: 18,
+    fontSize: 17,
+    fontWeight: "600",
     textAlign: "center",
-    fontFamily: theme.fonts.bold,
+    fontFamily: theme.fonts.medium,
+    letterSpacing: 0.3,
   },
 });
