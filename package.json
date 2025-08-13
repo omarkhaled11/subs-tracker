@@ -10,6 +10,8 @@
     "web": "expo start --web",
     "build:ios": "eas build --platform ios --profile development",
     "build:ios:prod": "eas build --platform ios --profile production",
+    "submit:ios": "eas submit --platform ios",
+    "build:ios:prod:submit": "eas build --platform ios --profile production --auto-submit",
     "build:android": "eas build --profile development --platform android"
   },
   "dependencies": {
